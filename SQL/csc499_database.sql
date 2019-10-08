@@ -2,6 +2,8 @@ CREATE TABLE Users   (
 
 	user_ID INT NOT NULL AUTO_INCREMENT,
 	username VARCHAR(25) NOT NULL,
+    user_type VARCHAR(5),
+    is_admin BOOLEAN,
 	public_name VARCHAR(25),
 	first_name VARCHAR(25),
 	last_name VARCHAR(25),
@@ -10,23 +12,24 @@ CREATE TABLE Users   (
 	zip_code CHAR(5),
 	email VARCHAR(50),
 	phone INT,
-	bio VARCHAR(500),
 	website_URL VARCHAR(100),
 	password VARCHAR(100),
+    bio VARCHAR(500),
 
 	PRIMARY KEY(user_ID)
 
 );
 CREATE TABLE Bookings	(
 
+	booking_ID INT NOT NULL AUTO_INCREMENT,
 	bar_ID INT NOT NULL,
-	band_ID INT NOT NULL,
+    band_ID INT NOT NULL,
 	datetime_requested DATETIME,
-	duration TINYINT,
+	duration_hrs TINYINT,
 	confirmed BOOLEAN,
-	confirmation_datetime DATETIME,
+	datetime_of_request DATETIME,
 
-	PRIMARY KEY(bar_ID, band_ID, datetime_requested),
+	PRIMARY KEY(booking_ID),
 	FOREIGN KEY(bar_ID) REFERENCES Users(user_ID),
 	FOREIGN KEY(band_ID) REFERENCES Users(user_ID)
 
@@ -34,28 +37,28 @@ CREATE TABLE Bookings	(
 CREATE TABLE Reviews    (
 
     review_ID INT NOT NULL AUTO_INCREMENT,
-    reviewer_ID INT NOT NULL,
-    reviewed_ID INT NOT NULL,
+    to_ID INT NOT NULL,
+    from_ID INT NOT NULL,
     rating TINYINT,
     review_text VARCHAR(250),
     review_datetime DATETIME,
     
     PRIMARY KEY(review_ID),
-    FOREIGN KEY(reviewer_ID) REFERENCES Users(user_ID),
-    FOREIGN KEY(reviewed_ID) REFERENCES Users(user_ID)
+    FOREIGN KEY(from_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY(to_ID) REFERENCES Users(user_ID)
     
 );
 CREATE TABLE Messages   (
 
     message_ID INT NOT NULL AUTO_INCREMENT,
-    sender_ID INT NOT NULL,
-    recipient_ID INT NOT NULL,
+    to_ID INT NOT NULL,
+    from_ID INT NOT NULL,
     message_text VARCHAR(500),
     message_datetime DATETIME,
 
     PRIMARY KEY(message_ID),
-    FOREIGN KEY(sender_ID) REFERENCES Users(user_ID),
-    FOREIGN KEY(recipient_ID) REFERENCES Users(user_ID)
+    FOREIGN KEY(from_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY(to_ID) REFERENCES Users(user_ID)
     
 );
 CREATE TABLE Followings (
@@ -68,6 +71,17 @@ CREATE TABLE Followings (
     FOREIGN KEY(being_followed_ID) REFERENCES Users(user_ID)
  
 );
+CREATE TABLE Shows  (
+
+    show_ID INT NOT NULL,
+    bar_ID INT NOT NULL,
+    start_datetime DATETIME,
+    end_datetime DATETIME,
+    
+    PRIMARY KEY(show_ID),
+    FOREIGN KEY(bar_ID) REFERENCES Users(user_ID)
+
+);
 CREATE TABLE Tours  (
 
     tour_ID INT NOT NULL AUTO_INCREMENT,
@@ -79,17 +93,25 @@ CREATE TABLE Tours  (
     FOREIGN KEY(band_ID) REFERENCES Users(user_ID)
 
 );
-CREATE TABLE Locations  (
+CREATE TABLE TourStops  (
 
-    band_ID INT NOT NULL,
-    location_datetime DATETIME,
     tour_ID INT NOT NULL,
-    zip_code CHAR(5),
+    show_ID INT NOT NULL,
     
-    PRIMARY KEY(band_ID, location_datetime),
-    FOREIGN KEY(band_ID) REFERENCES Users(user_ID),
-    FOREIGN KEY(tour_ID) REFERENCES Tours(tour_ID)
+    CONSTRAINT tour_stop PRIMARY KEY(tour_ID, bar_ID),
+    FOREIGN KEY(tour_ID) REFERENCES Tours(tour_ID),
+    FOREIGN KEY(show_ID) REFERENCES Users(user_ID)
 
+);
+CREATE TABLE Attendance (
+
+    fan_ID INT NOT NULL,
+    show_ID INT NOT NULL,
+    
+    CONSTRAINT attending PRIMARY KEY(fan_ID, show_ID),
+    FOREIGN KEY(fan_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY(show_ID) REFERENCES Shows(show_ID)
+    
 );
 CREATE TABLE Flags  (
 
@@ -105,13 +127,14 @@ CREATE TABLE Flags  (
 );
 CREATE TABLE Disciplines(
 
-    user_ID INT NOT NULL,
     flag_ID INT NOT NULL,
+    offender_ID INT NOT NULL,
+    admin_ID INT NOT NULL,
     discipline_type TINYINT NOT NULL,
     discipline_datetime DATETIME,
     discipline_duration SMALLINT,
     
-    PRIMARY KEY(user_ID, flag_ID),
+    CONSTRAINTdiscipline PRIMARY KEY(flag_ID, offender_ID),
     FOREIGN KEY(user_ID) REFERENCES Users(user_ID),
     FOREIGN KEY(flag_ID) REFERENCES Flags(flag_ID)
 
