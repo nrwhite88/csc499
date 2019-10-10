@@ -146,6 +146,16 @@ CREATE TABLE AdministeredDisciplines(
     FOREIGN KEY(admin_ID) REFERENCES Users(user_ID)
     
 );
+CREATE TABLE ReceivedDisciplines(
+
+    discipline_ID INT NOT NULL,
+    receiver_ID INT NOT NULL,
+    
+    CONSTRAINT received_discipline PRIMARY KEY(discipline_ID, receiver_ID),
+    FOREIGN KEY(discipline_ID) REFERENCES Disciplines(discipline_ID),
+    FOREIGN KEY(receiver_ID) REFERENCES Users(user_ID)
+    
+);
 CREATE TABLE Bookings	(
 
 	booking_ID INT NOT NULL AUTO_INCREMENT,
@@ -168,6 +178,16 @@ CREATE TABLE Shows  (
     PRIMARY KEY(show_ID),
 
 );
+CREATE TABLE ShowVenues   (
+
+    show_ID INT NOT NULL,
+    bar_ID INT NOT NULL,
+    
+    CONSTRAINT show_venue PRIMARY KEY(show_ID, bar_ID)
+    FOREIGN KEY(show_ID) REFERENCES Shows(show_ID),
+    FOREIGN KEY(bar_ID) REFERENCES Users(user_ID),
+
+);
 CREATE TABLE ShowBookings   (
 
     show_ID INT NOT NULL,
@@ -178,6 +198,16 @@ CREATE TABLE ShowBookings   (
     FOREIGN KEY(booking_ID) REFERENCES Bookings(booking_ID),
 
 );
+CREATE TABLE BandBookings   (
+
+    band_ID INT NOT NULL,
+    booking_ID INT NOT NULL,
+    
+    CONSTRAINT band_booking PRIMARY KEY(band_ID, booking_ID)
+    FOREIGN KEY(band_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY(booking_ID) REFERENCES Bookings(booking_ID),
+
+);
 CREATE TABLE Tours  (
 
     tour_ID INT NOT NULL AUTO_INCREMENT,
@@ -185,6 +215,16 @@ CREATE TABLE Tours  (
     end_datetime DATETIME,
     
     PRIMARY KEY(tour_ID),
+
+);
+CREATE TABLE BandTours  (
+
+    tour_ID INT NOT NULL,
+    band_ID INT NOT NULL,
+    
+    CONSTRAINT band_tour PRIMARY KEY(tour_ID, band_ID),
+    FOREIGN KEY(tour_ID) REFERENCES Tours(tour_ID),
+    FOREIGN KEY(band_ID) REFERENCES Users(user_ID)
 
 );
 CREATE TABLE TourStops  (
