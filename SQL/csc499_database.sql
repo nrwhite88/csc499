@@ -128,6 +128,15 @@ CREATE TABLE Followings (
     FOREIGN KEY(being_followed_ID) REFERENCES Users(user_ID)
  
 );
+CREATE TABLE MessageFlags  (
+
+    flag_ID INT NOT NULL,
+    message_ID INT NOT NULL,
+
+    PRIMARY KEY(flag_ID, message_ID),
+    FOREIGN KEY(flag_ID) REFERENCES Flags(flag_ID),
+    FOREIGN KEY(message_ID) REFERENCES Messages(message_ID)
+);
 CREATE TABLE SentFlags  (
 
     flag_ID INT NOT NULL,
@@ -139,9 +148,8 @@ CREATE TABLE SentFlags  (
 );
 CREATE TABLE ReceivedFlags  (
 
-    flag_ID INT NOT NULL,
-    receiver_ID INT NOT NULL,
-
+    flag_ID INT NOT NULL,arg
+    receiver_ID INT NOT N
     PRIMARY KEY(flag_ID, receiver_ID),
     FOREIGN KEY(flag_ID) REFERENCES Flags(flag_ID),
     FOREIGN KEY(receiver_ID) REFERENCES Users(user_ID)

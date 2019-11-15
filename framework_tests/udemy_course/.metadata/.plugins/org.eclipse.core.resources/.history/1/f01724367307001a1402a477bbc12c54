@@ -1,0 +1,16 @@
+package org.studyeasy.hibernate.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class Users {
+
+	int userID;
+	String username;
+	String password;
+	String firstName;
+	String lastName;
+	
+}
