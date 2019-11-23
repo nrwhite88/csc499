@@ -1,6 +1,6 @@
 CREATE TABLE Users      (
     user_ID INT NOT NULL AUTO_INCREMENT,
-	username VARCHAR(25) NOT NULL,
+	username VARCHAR(25) NOT NULL UNIQUE,
     user_type VARCHAR(5),
     is_admin BOOLEAN,
 	public_name VARCHAR(50),

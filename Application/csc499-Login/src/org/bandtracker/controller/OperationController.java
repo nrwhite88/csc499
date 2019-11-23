@@ -73,10 +73,20 @@ public class OperationController extends HttpServlet {
 	}
 	
 	private void loginOperation(HttpServletRequest request, HttpServletResponse response, 
-			DataSource datasource, String username, String password) throws ServletException, IOException {
+				DataSource datasource, String username, String password) throws ServletException, IOException {
+		// Get current user attributes
 		List<User> currentUser = new ArrayList<>();
 		currentUser = new UserModel().validateCredentials(dataSource, username, password);
 		request.setAttribute("user", currentUser);
+		
+		// Get list based on user type
+		List<User> userList = new ArrayList<>();
+		String user_type = currentUser.get(0).getUserType();
+		request.setAttribute("type", user_type);
+		userList = new UserModel().listUsers(dataSource, user_type);
+		request.setAttribute("userList", userList);
+		
+		// Start session and forward user to their home page
 		if(! currentUser.isEmpty()) {
 			authenticate(request, response, username);
 		}

@@ -70,13 +70,6 @@ public class UserModel {
 		Boolean match = false;
 		List<User> user = new ArrayList<>();
 
-		/**
-		List<Object> userAttributes = new ArrayList<Object>();
-		userAttributes.addAll(Arrays.asList(
-				"user_ID", "username",  "user_type", "is_admin", "public_name", "first_name", "last_name",
-				"street_address", "town", "zip_code", "email", "phone", "website_URL", "password", "bio"));
-		*/
-
 		try {
 			connect = dataSource.getConnection();
 			
@@ -104,12 +97,57 @@ public class UserModel {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			//FIXME add handler for case where username is taken
 		}
 		
 		return user;
 		
 	}
 	
+	public List<User> listUsers(DataSource dataSource, String type) {
+		List<User> listUsers = new ArrayList<>();
+		Connection connect = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		type = type.toLowerCase();
+		
+		switch (type) {
+		case "bar":
+			type = "band";
+			break;
+		case "band":
+			type = "bar";
+		default:
+			break;
+		}
+		
+		try {
+			connect = dataSource.getConnection();
+			String query = "Select * from users where user_type=?";
+			stmt = connect.prepareStatement(query);
+			stmt.setString(1, type);
+			System.out.println(stmt);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				listUsers.add(new User(rs.getInt("user_ID"), rs.getString("username"),  rs.getString("user_type"),
+						rs.getBoolean("is_admin"), rs.getString("public_name"), rs.getString("first_name"),
+						rs.getString("last_name"), rs.getString("street_address"), rs.getString("town"),
+						rs.getString("zip_code"), rs.getString("email"), rs.getInt("phone"),
+						rs.getString("website_URL"), rs.getString("password"), rs.getString("bio")				
+						));
+			}
+			System.out.println(listUsers);
+			return listUsers;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listUsers;
+	}
 
 	
 }
