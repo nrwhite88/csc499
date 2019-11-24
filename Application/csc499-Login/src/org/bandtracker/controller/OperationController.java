@@ -1,11 +1,14 @@
 package org.bandtracker.controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.bandtracker.entity.Booking;
 import org.bandtracker.entity.User;
+import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/operation")
@@ -39,6 +44,9 @@ public class OperationController extends HttpServlet {
 		case "login":
 			loginFormLoader(request, response);
 			break;
+		case "book":
+			bookFormLoader(request, response);
+			break;
 		default:
 			errorPage(request, response);
 		}
@@ -47,6 +55,7 @@ public class OperationController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String operation = request.getParameter("form");
+		System.out.println("Operation: " + operation);
 		operation = operation.toLowerCase();
 		switch (operation) {
 		case "registeroperation":
@@ -62,6 +71,13 @@ public class OperationController extends HttpServlet {
 		case "loginoperation":
 			loginOperation(request, response, dataSource, request.getParameter("username"),
 					request.getParameter("password"));
+			break;
+		case "bookoperation":
+			LocalDateTime timestamp = LocalDateTime.now();
+			Booking newBooking = new Booking(timestamp.toString(), Integer.parseInt(request.getParameter("duration").toString()),
+					request.getParameter("datetime").toString());
+			bookOperation(request, response, dataSource, newBooking);
+			request.getRequestDispatcher("home.jsp").forward(request, response);
 		default:
 			break;
 		}
@@ -108,6 +124,12 @@ public class OperationController extends HttpServlet {
 
 	}
 	
+	public void bookOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
+			Booking newBooking) throws ServletException, IOException {
+		new BookingModel().addBooking(dataSource, newBooking);
+		
+	}
+	
 	public void registerFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Registration");
 		request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -116,6 +138,11 @@ public class OperationController extends HttpServlet {
 	public void loginFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Login");
 		request.getRequestDispatcher("login.jsp").forward(request, response);
+	}
+	
+	public void bookFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Login");
+		request.getRequestDispatcher("book.jsp").forward(request, response);
 	}
 	
 	public void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

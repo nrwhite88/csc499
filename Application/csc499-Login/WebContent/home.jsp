@@ -24,18 +24,18 @@ else {
 }
 
 List<User> user = (List)request.getAttribute("user");
-String publicName = user.get(0).getPublicName();
-String userType = user.get(0).getUserType();
+String public_name = user.get(0).getPublicName();
+String user_type = user.get(0).getUserType();
 
 List<User> userList = (List)request.getAttribute("userList");
 %>
 
-<h1>Welcome, <%= publicName %></h1>
+<h1>Welcome, <%= public_name %></h1>
 
 <div class="container mtb">
 	<div class="row">
 		<div class="col-lg-6">
-			<strong>Check out these bands or bars:</strong>
+			<strong>Check out these local folks:</strong>
 			<hr/>
 			<table>
 				<thead>
@@ -44,15 +44,19 @@ List<User> userList = (List)request.getAttribute("userList");
 					<th>WEBSITE</th>
 					</thead>
 					<%
+					int booker_id = user.get(0).getUserId();
 					for(int i=0; i<userList.size(); i++) {
 						out.print("<tr>");
 						out.print("<td>" + userList.get(i).getPublicName() + "</td>");
 						out.print("<td>" + userList.get(i).getTown() + "</td>");
 						out.print("<td>" + userList.get(i).getWebsiteURL() + "</td>");
-						out.print("<td><form action='" + request.getContextPath() + "/operation' method='get'>" +
-								"<input type='hidden' name='form' value='bookingOperation'>" +
-								"<input type='submit' value='BOOK'></td>");
-						
+						out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + public_name
+								+ "&bookee_id=" + userList.get(i).getUserId() + "' method='get'>"
+								+ "<input type='submit' value='BOOK'>"
+								+ "<input type='hidden' name='page' value='book'>"
+								+ "<input type='hidden' name='booker' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='bookee' value='" + userList.get(i).getUserId() + "'>"
+								+ "</form></td>");
 					}
 					%>
 			</table>

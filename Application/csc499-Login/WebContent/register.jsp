@@ -29,6 +29,7 @@
 <font color="red">* = Required field</font><br/><br/>
 <input type="hidden" name="form" value="registerOperation">
 <input type="submit" value="Sign Me Up!">
+</form>
 
 </body>
 </html>

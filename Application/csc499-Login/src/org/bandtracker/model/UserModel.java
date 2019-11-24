@@ -109,6 +109,7 @@ public class UserModel {
 		Connection connect = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		String type1=null, type2=null;
 		type = type.toLowerCase();
 		
 		switch (type) {
@@ -117,15 +118,27 @@ public class UserModel {
 			break;
 		case "band":
 			type = "bar";
-		default:
+		case "fan":
+			type = "fan";
+			type1 = "band";
+			type2 = "bar";
 			break;
 		}
 		
 		try {
 			connect = dataSource.getConnection();
 			String query = "Select * from users where user_type=?";
+			if(type=="fan") {
+				query = query + "or user_type=?";
+			}
 			stmt = connect.prepareStatement(query);
-			stmt.setString(1, type);
+			if(type=="fan") {
+				stmt.setString(1, type1);
+				stmt.setString(2, type2);
+			}
+			else {
+				stmt.setString(1, type);
+			}
 			System.out.println(stmt);
 			
 			rs = stmt.executeQuery();

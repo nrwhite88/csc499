@@ -17,7 +17,6 @@ Username: <input type="text" name="username" required><br/>
 Password: <input type="password" name="password" required><br/>
 <input type="hidden" name="form" value="loginOperation">
 <input type="submit" value="Submit">
-
 </form>
 
 </body>

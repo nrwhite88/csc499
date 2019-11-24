@@ -42,7 +42,6 @@ public class User {
 		this.email = email;
 		this.phone = phone;
 	}
-	
 
 	public User(int userId, String username, String userType, Boolean isAdmin, String publicName, String firstName,
 			String lastName, String streetAddress, String town, String zipCode, String email, int phone,
