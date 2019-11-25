@@ -1,4 +1,4 @@
-package org.bandtracker.model;
+package com.eventuror.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.bandtracker.entity.User;
+import com.eventuror.entity.User;
 
 public class UserModel {
 
@@ -111,7 +111,6 @@ public class UserModel {
 		ResultSet rs = null;
 		String type1=null, type2=null;
 		type = type.toLowerCase();
-		System.out.println("Type:" + type);
 		
 		switch (type) {
 		case "bar":
@@ -126,7 +125,6 @@ public class UserModel {
 		}
 		
 		try {
-			System.out.println(type);
 			connect = dataSource.getConnection();
 			String query = "Select * from users where user_type=?";
 			if(type=="fan") {
