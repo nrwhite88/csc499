@@ -22,8 +22,10 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.bandtracker.entity.Booking;
+import org.bandtracker.entity.Show;
 import org.bandtracker.entity.User;
 import org.bandtracker.model.BookingModel;
+import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/operation")
@@ -46,6 +48,9 @@ public class OperationController extends HttpServlet {
 			break;
 		case "book":
 			bookFormLoader(request, response);
+			break;
+		case "addshow":
+			addShowFormLoader(request, response);
 			break;
 		default:
 			errorPage(request, response);
@@ -77,6 +82,10 @@ public class OperationController extends HttpServlet {
 			Booking newBooking = new Booking(timestamp.toString(), Integer.parseInt(request.getParameter("duration").toString()),
 					request.getParameter("datetime").toString());
 			bookOperation(request, response, dataSource, newBooking);
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+		case "addshowoperation":
+			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString());
+			addShowOperation(request, response, dataSource, newShow);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		default:
 			break;
@@ -130,6 +139,12 @@ public class OperationController extends HttpServlet {
 		
 	}
 	
+	public void addShowOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
+			Show newShow) throws ServletException, IOException {
+		new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
+		
+	}
+	
 	public void registerFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Registration");
 		request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -141,8 +156,13 @@ public class OperationController extends HttpServlet {
 	}
 	
 	public void bookFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("title", "Login");
+		request.setAttribute("title", "Book");
 		request.getRequestDispatcher("book.jsp").forward(request, response);
+	}
+	
+	public void addShowFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Add Show");
+		request.getRequestDispatcher("addShow.jsp").forward(request, response);
 	}
 	
 	public void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

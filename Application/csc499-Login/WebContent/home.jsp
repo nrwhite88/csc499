@@ -64,6 +64,20 @@ List<User> userList = (List)request.getAttribute("userList");
 	</div>
 </div>
 
+<% 
+	user_type = user_type.toString().toLowerCase();
+	out.println(user_type);
+	out.println(user_type == "bar");
+	//if (user_type == "bar") {
+		out.print(user_type);
+		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
+				+ "' method='get'>");
+		out.print("<input type='submit' value='Add Show'>"
+				+ "<input type='hidden' name='page' value='addShow'>"
+				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'></form>");
+	//}
+%>
+
 <form action="<%= request.getContextPath()%>/site" method="get">
 <input type="hidden" name="action" value="destroy">
 <input type="submit" value="Logout">

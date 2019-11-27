@@ -10,8 +10,7 @@ public class Show {
 		
 	}
 	
-	public Show(int showId, String startDatetime, String endDatetime) {
-		this.showId = showId;
+	public Show(String startDatetime, String endDatetime) {
 		this.startDatetime = startDatetime;
 		this.endDatetime = endDatetime;
 	}
