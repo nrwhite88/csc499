@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.sql.DataSource;
 
-import org.bandtracker.entity.Booking;
-import org.bandtracker.entity.Show;
+import org.bandtracker.hibernate.entity.Booking;
+import org.bandtracker.hibernate.entity.Show;
 
 public class ShowModel {
 

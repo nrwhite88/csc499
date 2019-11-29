@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.sql.DataSource;
 
-import org.bandtracker.entity.Booking;
+import org.bandtracker.hibernate.entity.Booking;
 
 public class BookingModel {
 

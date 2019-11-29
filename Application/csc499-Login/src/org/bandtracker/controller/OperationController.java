@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import org.bandtracker.entity.Booking;
-import org.bandtracker.entity.Show;
-import org.bandtracker.entity.User;
+import org.bandtracker.hibernate.entity.Booking;
+import org.bandtracker.hibernate.entity.Show;
+import org.bandtracker.hibernate.entity.User;
 import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;

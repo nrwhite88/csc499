@@ -11,7 +11,8 @@
 <h1>Welcome!</h1>
 
 <a href="${pageContext.request.contextPath}/operation?page=register">Register</a><br><br>
-<a href="${pageContext.request.contextPath}/operation?page=login">Log In</a><br>
+<a href="${pageContext.request.contextPath}/operation?page=login">Log In</a><br><br>
+<a href="${pageContext.request.contextPath}/site?action=listUsers">List Users</a><br><br>
 
 </body>
 </html>

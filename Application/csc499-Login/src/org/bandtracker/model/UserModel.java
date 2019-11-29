@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.bandtracker.entity.User;
+import org.bandtracker.hibernate.entity.User;
 
 public class UserModel {
 

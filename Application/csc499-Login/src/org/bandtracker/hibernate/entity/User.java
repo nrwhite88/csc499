@@ -1,22 +1,62 @@
-package org.bandtracker.entity;
+package org.bandtracker.hibernate.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity(name="Users")
+@Table(name="Users")
 public class User {
 
-	int userId;
-	String username;
-	String userType;
-	Boolean isAdmin;
-	String publicName;
-	String firstName;
-	String lastName;
-	String streetAddress;
-	String town;
-	String zipCode;
-	String email;
-	int phone;
-	String websiteURL;
-	String password;
-	String bio;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="user_ID")
+	private Integer userId;
+	@Column(name="username")
+	private String username;
+	@Column(name="user_type")
+	private String userType;
+	@Column(name="is_admin")
+	private Boolean isAdmin;
+	@Column(name="public_name")
+	private String publicName;
+	@Column(name="first_name")
+	private String firstName;
+	@Column(name="last_name")
+	private String lastName;
+	@Column(name="street_address")
+	private String streetAddress;
+	@Column(name="town")
+	private String town;
+	@Column(name="zip_code")
+	private String zipCode;
+	@Column(name="email")
+	private String email;
+	@Column(name="phone")
+	private Integer phone;
+	@Column(name="website_URL")
+	private String websiteURL;
+	@Column(name="password")
+	private String password;
+	@Column(name="bio")
+	private String bio;
+	
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mUser")
+	private List<Booking> bookings;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mUser")
+	private List<Show> shows;
 	
 	public User() {
 

@@ -1,4 +1,4 @@
-package org.bandtracker.entity;
+package org.bandtracker.hibernate.entity;
 
 public class Message {
 	
