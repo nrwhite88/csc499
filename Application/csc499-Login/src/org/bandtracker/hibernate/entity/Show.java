@@ -71,7 +71,11 @@ public class Show {
 	public void setmUser(User mUser) {
 		this.mUser = mUser;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Show [showId=" + showId + ", startDatetime=" + startDatetime + ", endDatetime=" + endDatetime + "]";
+	}
 	
 	
 }

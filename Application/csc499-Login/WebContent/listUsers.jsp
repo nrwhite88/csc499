@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="org.bandtracker.hibernate.entity.User" %>
+<%@ page import="org.bandtracker.hibernate.entity.Show" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,11 @@
 List<User> users = (List)request.getAttribute("userList");
 for(User user : users) {
 	out.println("<p>" + user.getUsername() + "</p>");
+}
+List<Show> shows = (List)request.getAttribute("shows");
+for(Show show : shows) {
+	out.println(shows);
+	out.println(shows.get(0).getShowId());
 }
 %>
 

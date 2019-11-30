@@ -129,11 +129,11 @@ public class UserModel {
 			System.out.println(type);
 			connect = dataSource.getConnection();
 			String query = "Select * from users where user_type=?";
-			if(type=="fan") {
+			if(type.equals("fan")) {
 				query = query + "or user_type=?";
 			}
 			stmt = connect.prepareStatement(query);
-			if(type=="fan") {
+			if(type.equals("fan")) {
 				stmt.setString(1, type1);
 				stmt.setString(2, type2);
 			}

@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.bandtracker.hibernate.dao.BookingDAO;
+import org.bandtracker.hibernate.dao.ShowDAO;
 import org.bandtracker.hibernate.entity.Booking;
 import org.bandtracker.hibernate.entity.Show;
 import org.bandtracker.hibernate.entity.User;
@@ -78,6 +80,7 @@ public class OperationController extends HttpServlet {
 					request.getParameter("password"));
 			break;
 		case "bookoperation":
+			System.out.println(request.getParameter("duration"));
 			LocalDateTime timestamp = LocalDateTime.now();
 			Booking newBooking = new Booking(timestamp.toString(), Integer.parseInt(request.getParameter("duration").toString()),
 					request.getParameter("datetime").toString());
@@ -135,13 +138,20 @@ public class OperationController extends HttpServlet {
 	
 	public void bookOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
 			Booking newBooking) throws ServletException, IOException {
-		new BookingModel().addBooking(dataSource, newBooking);
+		
+		DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String datetimeOfRequest = LocalDateTime.parse(newBooking.getDatetimeOfRequest()).format(dtFormat);
+		newBooking.setDatetimeOfRequest(datetimeOfRequest);
+		String bandId = request.getParameter("bookee_id").toString();
+		String showId = request.getParameter("show_id").toString();
+		new BookingDAO().addBookingDetails(newBooking, Integer.parseInt(bandId), Integer.parseInt(showId));
 		
 	}
 	
 	public void addShowOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
 			Show newShow) throws ServletException, IOException {
-		new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
+		new ShowDAO().addShowDetails(newShow, Integer.parseInt(request.getParameter("bar_id").toString()));
+		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
 		
 	}
 	
@@ -156,6 +166,24 @@ public class OperationController extends HttpServlet {
 	}
 	
 	public void bookFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Object shows = null;
+		
+		// Get recommendations list based on user type
+		List<User> userList = new ArrayList<>();
+		String user_type = request.getParameter("user_type").toString();
+		request.setAttribute("user_type", user_type);
+		userList = new UserModel().listUsers(dataSource, user_type);
+		request.setAttribute("userList", userList);
+		
+		// Get list of shows
+		if(user_type.equals("BAR")) {
+			shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("booker")));
+		}
+		else if(user_type.equals("BAND")) {
+			shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+		}
+		request.setAttribute("shows", shows);
 		request.setAttribute("title", "Book");
 		request.getRequestDispatcher("book.jsp").forward(request, response);
 	}

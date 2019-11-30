@@ -2,6 +2,12 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
 <%@ page import="org.bandtracker.hibernate.entity.Show" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="header.jsp">
+<c:param name="title" value="Index"/>
+</c:import>
+
+<jsp:include page="header.jsp"></jsp:include>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,18 +18,17 @@
 <body>
 
 <%
-String bar_id = request.getParameter("bar_id").toString();
+String bar_id = request.getParameter("bar_id");
 %>
 
-<h1>Enter booking details:</h1>
+<h1>Enter show details:</h1>
 <form action="${pageContext.request.contextPath}/operation" method="post">
 	Start Datetime:<input type="text" name="start_datetime" required="required"/><br/>
 	End Datetime: <input type="text" name="end_datetime" required="required"/><br/>
 <br/>
-<input type="hidden" name="bar_id" value="${bar_id}">
+<input type="hidden" name="bar_id" value=<% out.println(bar_id); %>>
 <input type="hidden" name="form" value="addShowOperation">
 <input type="submit" value="Create Show">
 </form>
 
-</body>
-</html>
+<c:import url="footer.jsp"></c:import>

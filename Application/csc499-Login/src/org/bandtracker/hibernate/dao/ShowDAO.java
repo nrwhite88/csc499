@@ -1,5 +1,6 @@
 package org.bandtracker.hibernate.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.bandtracker.hibernate.entity.Booking;
@@ -36,6 +37,7 @@ public class ShowDAO {
         return factory;
     }
 	
+    //Testing
 	public void addShow(Show show) {
 		factory = getSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -50,6 +52,34 @@ public class ShowDAO {
 		session.getTransaction().commit();
 		
 		System.out.println(show.getStartDatetime() + "show was added for" + user.getUsername());	
+	}
+	
+	public void addShowDetails(Show show, int barId) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		User bar = (User) session.get(User.class, barId);
+		show.setmUser(bar);
+		System.out.println(show);
+		
+		session.save(show);
+		session.getTransaction().commit();
+		
+		System.out.println(show.getStartDatetime() + "show was added for" + bar.getUsername());	
+	}
+	
+	public List<Show> listShowsByUserId(int uid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Show> shows =  session.createQuery("select s from Shows s "
+				+ "where bar_id=?1").setParameter(1, uid).getResultList();
+		session.getTransaction().commit();
+		System.out.println(shows);
+		return shows;
 	}
 	
 	public List<User> listUsers() {

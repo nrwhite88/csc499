@@ -1,28 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="org.bandtracker.hibernate.entity.User" %>
+<%@ page import="org.bandtracker.hibernate.entity.Show" %>
+<%@ page import="org.bandtracker.hibernate.entity.Booking" %>
 <%@ page import="java.util.List" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-    
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="header.jsp">
+<c:param name="title" value="Index"/>
+</c:import>
+
+<jsp:include page="header.jsp"></jsp:include>
 
 <%
-String username = null, sessionID = null;
-if(request.getSession().getAttribute("username") == null) {
-	response.sendRedirect("login.jsp");
-}
-else {
-	username = request.getSession().getAttribute("username").toString();
-	sessionID = request.getSession().getId();
-}
+String username = null;
+Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals("user"))
+				username = cookie.getValue();
+		}
+	}
 
+if(username == null) response.sendRedirect("login.jsp");
+%>
+
+<%
 List<User> user = (List)request.getAttribute("user");
 String public_name = user.get(0).getPublicName();
 String user_type = user.get(0).getUserType();
@@ -30,58 +32,189 @@ String user_type = user.get(0).getUserType();
 List<User> userList = (List)request.getAttribute("userList");
 %>
 
-<h1>Welcome, <%= public_name %></h1>
-
-<div class="container mtb">
+<center><h1>Welcome, <%= public_name %></h1></center>
+<div class="container">
 	<div class="row">
 		<div class="col-lg-6">
 			<strong>Check out these local folks:</strong>
 			<hr/>
 			<table>
 				<thead>
-					<th><%= userList.get(0).getUserType() %></th>
+					<th><% if(! user_type.equals("FAN")) {
+						out.print(userList.get(0).getUserType());
+						}
+					else {
+						out.print("FOLK");
+						out.print("<th>TYPE</th>");
+					}
+						%>
+					</th>
 					<th>TOWN</th>
 					<th>WEBSITE</th>
 					</thead>
 					<%
 					int booker_id = user.get(0).getUserId();
 					for(int i=0; i<userList.size(); i++) {
+						int bookee = userList.get(i).getUserId();
 						out.print("<tr>");
 						out.print("<td>" + userList.get(i).getPublicName() + "</td>");
+						if(user_type.equals("FAN")) {
+							out.print("<td>" + userList.get(i).getUserType() + "</td>");
+						}
 						out.print("<td>" + userList.get(i).getTown() + "</td>");
 						out.print("<td>" + userList.get(i).getWebsiteURL() + "</td>");
-						out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + public_name
+						out.print("<td><form action='" + request.getContextPath() + "/site?"
+								+ "&user_id=" + booker_id + "' method='get'>"
+								+ "<input type='submit' value='VIEW PROFILE'>"
+								+ "<input type='hidden' name='page' value='profile'>"
+								+ "<input type='hidden' name='booker' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
+								+ "</form></td>");
+						if(! user_type.equals("FAN")) {
+						out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + booker_id
 								+ "&bookee_id=" + userList.get(i).getUserId() + "' method='get'>"
 								+ "<input type='submit' value='BOOK'>"
 								+ "<input type='hidden' name='page' value='book'>"
 								+ "<input type='hidden' name='booker' value='" + booker_id + "'>"
-								+ "<input type='hidden' name='bookee' value='" + userList.get(i).getUserId() + "'>"
+								+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
+								+ "<input type='hidden' name='user_type' value='" + user_type + "'>"
 								+ "</form></td>");
+						}
+						else {
+						int fan_id = booker_id;
+						int followee_id = bookee;
+						out.print("<td><form action='" + request.getContextPath() + "/operation?follower_id=" + fan_id
+								+ "&followee_id=" + userList.get(i).getUserId() + "' method='post'>"
+								+ "<input type='submit' value='FOLLOW'>"
+								+ "<input type='hidden' name='page' value='follow'>"
+								+ "<input type='hidden' name='follower' value='" + fan_id + "'>"
+								+ "<input type='hidden' name='followee' value='" + followee_id + "'>"
+								+ "</form></td>");
+						}
 					}
 					%>
 			</table>
 		</div>
 	</div>
 </div>
-
 <% 
 	user_type = user_type.toString().toLowerCase();
-	out.println(user_type);
-	out.println(user_type == "bar");
-	//if (user_type == "bar") {
-		out.print(user_type);
+	if (user_type.equals("bar")) {
+		out.print(
+		"<div class='container mtb'>" +
+			"<div class='row'>" +
+				"<div class='col-lg-6'>" +
+					"<strong>Your upcoming shows:</strong>" +
+						"<hr/>" +
+							"<table>" +
+								"<thead>" +
+									"<th>SHOW ID</th>" +
+									"<th>START</th>" +
+									"<th>END</th>" +
+								"</thead>");
+
+					List<Show> showList = (List)request.getAttribute("shows");
+					int show_id;
+					for(int i=0; i<showList.size(); i++) {
+						show_id = showList.get(i).getShowId();
+						out.print("<tr>");
+						out.print("<td>" + show_id + "</td>");
+						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
+						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
+						out.print("<td><form action='" + request.getContextPath() + "/site?"
+								+ "&bar_id=" + userList.get(i).getUserId() + "' method='get'>"
+								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='hidden' name='page' value='edit'>"
+								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
+								+ "</form></td>");
+						out.print("<td><form action='" + request.getContextPath() + "/site?"
+								+ "&show_id=" + show_id + "' method='get'>"
+								+ "<input type='submit' value='VIEW SHOW'>"
+								+ "<input type='hidden' name='page' value='show'>"
+								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
+								+ "</form></td>");
+					}
+		out.print(					
+					"</table>" +
+				"</div>" +
+			"</div>" +
+		"</div>"
+				);
+		
 		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
 				+ "' method='get'>");
 		out.print("<input type='submit' value='Add Show'>"
 				+ "<input type='hidden' name='page' value='addShow'>"
 				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'></form>");
-	//}
+	}
+	
+	else if (user_type.equals("band")) {
+		out.print(
+		"<div class='container mtb'>" +
+			"<div class='row'>" +
+				"<div class='col-lg-6'>" +
+					"<strong>Your gig requests:</strong>" +
+						"<hr/>" +
+							"<table>" +
+								"<thead>" +
+									"<th>BOOKING ID</th>" +
+									"<th>START</th>" +
+									"<th>DURATION</th>" +
+									"<th>STATUS</th>" +
+								"</thead>");
+					List<Booking> bookingList = (List)request.getAttribute("bookings");
+					int booking_id;
+					for(int i=0; i<bookingList.size(); i++) {
+						String confirmed = null;
+						booking_id = bookingList.get(i).getBookingId();
+						String datetime = bookingList.get(i).getRequestedDatetime();
+						int duration = bookingList.get(i).getDuration();
+						Boolean conf = bookingList.get(i).getConfirmed();
+						if (conf == null) {
+							confirmed = "Pending";
+						}
+						else if (conf == false) {
+							confirmed = "Denied";
+						}
+						else if (conf == true) {
+							confirmed = "Confirmed";
+						}
+						out.print("<tr>");
+						out.print("<td>" + booking_id + "</td>");
+						out.print("<td>" + datetime + "</td>");
+						out.print("<td>" + duration + "</td>");
+						out.print("<td>" + confirmed + "</td>");
+						out.print("<td><form action='" + request.getContextPath() + "/site?"
+								+ "&booking_id=" + booking_id + "' method='get'>"
+								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='hidden' name='page' value='edit'>"
+								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
+								+ "</form></td>");
+						out.print("<td><form action='" + request.getContextPath() + "/site?"
+								+ "&show_id=" + booking_id + "' method='get'>"
+								+ "<input type='submit' value='VIEW BOOKING'>"
+								+ "<input type='hidden' name='page' value='show'>"
+								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
+								+ "</form></td>");
+					}
+		out.print(					
+					"</table>" +
+				"</div>" +
+			"</div>" +
+		"</div>"
+				);
+		
+		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
+				+ "' method='get'>");
+		out.print("<input type='submit' value='Add Show'></center>"
+				+ "<input type='hidden' name='page' value='addShow'>"
+				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'>");
+	}
 %>
+<br>
 
-<form action="<%= request.getContextPath()%>/site" method="get">
-<input type="hidden" name="action" value="destroy">
-<input type="submit" value="Logout">
-</form>
-
-</body>
-</html>
+<c:import url="footer.jsp"></c:import>

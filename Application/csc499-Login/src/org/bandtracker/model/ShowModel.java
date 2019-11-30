@@ -34,5 +34,27 @@ public class ShowModel {
 			return false;
 		}
 	}
+
+	public Boolean getShowById(DataSource dataSource, Show show, int bar_id) {
+		Connection connect = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connect = dataSource.getConnection();
+			
+			String query = "select show_ID from shows"
+					+ "where ";
+			statement = connect.prepareStatement(query);
+			statement.setString(1, show.getStartDatetime());
+			statement.setString(2, show.getEndDatetime());
+			System.out.println(statement);
+			
+			return statement.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 }

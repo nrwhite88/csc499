@@ -1,5 +1,6 @@
 package org.bandtracker.hibernate.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.bandtracker.hibernate.entity.Booking;
@@ -36,6 +37,7 @@ public class BookingDAO {
         return factory;
     }
 	
+    //Testing
 	public void addBooking(Booking booking) {
 		factory = getSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -51,6 +53,36 @@ public class BookingDAO {
 		session.getTransaction().commit();
 		
 		System.out.println(booking.getRequestedDatetime() + "booking was added for" + user.getUsername());	
+	}
+	
+	public void addBookingDetails(Booking booking, int bandId, int showId) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		User band = (User) session.get(User.class, bandId);
+		Show show = (Show) session.get(Show.class, showId);		
+		
+		booking.setmUser(band);
+		booking.setmShow(show);
+		
+		session.save(booking);
+		session.getTransaction().commit();
+		
+		System.out.println(booking.getRequestedDatetime() + "booking was added for" + band.getUsername());	
+	}
+	
+	public List<Booking> listBookingsByUserId(int uid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Booking> bookings =  session.createQuery("select b from Bookings b "
+				+ "where band_id=?1").setParameter(1, uid).getResultList();
+		session.getTransaction().commit();
+		System.out.println(bookings);
+		return bookings;
 	}
 	
 	public List<User> listUsers() {
