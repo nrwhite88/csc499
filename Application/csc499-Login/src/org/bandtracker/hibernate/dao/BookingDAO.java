@@ -108,4 +108,20 @@ public class BookingDAO {
 		return users;
 	}
 	
+	public void editBookingDetails(int bookingId, String requestedDatetime, int duration, Boolean confirmed) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		Booking booking = (Booking) session.get(Booking.class, bookingId);
+		booking.setRequestedDatetime(requestedDatetime);
+		booking.setDuration(duration);
+		booking.setConfirmed(confirmed);
+		
+		Booking mergedBooking = (Booking) session.merge(booking);
+		session.getTransaction().commit();
+		
+		System.out.println("Edit successful.");	
+	}
+	
 }

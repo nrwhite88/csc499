@@ -66,18 +66,18 @@ td
       </div>
       <div class="navbar-collapse collapse navbar-right">
         <ul class="nav navbar-nav">
-          <-- <li class="active"><a href="about.html">LANDING PAGE</a></li> -->
           <li><a href="index.jsp">HOME</a></li>
-          <li><a href="calendar.jsp">CALENDAR</a></li>
+          <li><a href="myCalendar.jsp">CALENDAR</a></li>
+          <li><a href="myBooking.jsp">BOOKING</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
-          <li><a href="profile.jsp">PROFILE</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">ETC<b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li><a href="editProfile.jsp">PROFILE</a></li>
               <li><a href="about.jsp">ABOUT</a></li>
-              <li><a href="messages.jsp">MESSAGES</a></li>
-              <li><a href="reviews.jsp">REVIEWS</a></li>
-              <li><a href="history.jsp">SHOW HISTORY</a></li>
+              <li><a href="myMessages.jsp">MESSAGES</a></li>
+              <li><a href="myReviews.jsp">REVIEWS</a></li>
+              <li><a href="myHistory.jsp">SHOW HISTORY</a></li>
               <li><a href="<%= request.getContextPath()%>/site?action=destroy">LOGOUT</a></li>
             </ul>
           </li>

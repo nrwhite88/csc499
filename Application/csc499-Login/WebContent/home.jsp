@@ -40,7 +40,7 @@ List<User> userList = (List)request.getAttribute("userList");
 %>
 
 <center><h1>Welcome, <%= public_name %></h1></center>
-<div class="container">
+<div class="container mtb">
 	<div class="row">
 		<div class="col-lg-6">
 			<strong>Check out these local folks:</strong>
@@ -128,11 +128,11 @@ List<User> userList = (List)request.getAttribute("userList");
 						out.print("<td>" + show_id + "</td>");
 						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
 						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
-								+ "&bar_id=" + userList.get(i).getUserId() + "' method='get'>"
+						out.print("<td><form action='" + request.getContextPath() + "/operation?"
+								+ "&show_id=" + show_id + "' method='get'>"
 								+ "<input type='submit' value='EDIT'>"
-								+ "<input type='hidden' name='page' value='edit'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
+								+ "<input type='hidden' name='page' value='editShow'>"
+								+ "<input type='hidden' name='user_id' value='" + userId + "'>"
 								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
 								+ "</form></td>");
 						out.print("<td><form action='" + request.getContextPath() + "/operation?"

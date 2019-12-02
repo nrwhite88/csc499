@@ -69,6 +69,20 @@ public class ShowDAO {
 		System.out.println(show.getStartDatetime() + "show was added for" + bar.getUsername());	
 	}
 	
+	public Show getShowById(int sid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+
+		Show show = (Show) session.get(Show.class, sid);
+		
+		session.getTransaction().commit();
+		System.out.println(show);
+		return show;
+	}
+	
 	public List<Show> listShowsByUserId(int uid) {
 
 		factory = getSessionFactory();
@@ -149,6 +163,35 @@ public class ShowDAO {
 		session.getTransaction().commit();	
 		System.out.println(users);
 		return users;
+	}
+	
+	public void editShowDetails(int showId, String startDatetime, String endDatetime) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		Show show = (Show) session.get(Show.class, showId);
+		show.setStartDatetime(startDatetime);
+		show.setEndDatetime(endDatetime);
+		
+		Show mergedShow = (Show) session.merge(show);
+		session.getTransaction().commit();
+		
+		System.out.println("Edit successful.");	
+	}
+	
+	public void deleteShow(int showId) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		Show show = new Show();
+		show.setShowId(showId);
+		session.delete(show);
+
+		session.getTransaction().commit();
+		
+		System.out.println("Edit successful.");	
 	}
 	
 }

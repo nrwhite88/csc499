@@ -51,10 +51,16 @@ public class OperationController extends HttpServlet {
 			break;
 		case "profile":
 			profileLoader(request, response);
+			break;
 		case "show":
 			showLoader(request, response);
+			break;
 		case "search":
 			searchFormLoader(request, response);
+			break;
+		case "editshow":
+			editShowLoader(request, response);
+			break;
 		default:
 			errorPage(request, response);
 		}
@@ -93,6 +99,8 @@ public class OperationController extends HttpServlet {
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		case "searchoperation":
 			searchOperation(request, response);
+		case "editshowoperation":
+			editShowOperation(request, response);
 		default:
 			break;
 		}
@@ -198,11 +206,55 @@ public class OperationController extends HttpServlet {
 	
 	public void showLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Show");
+		request.setAttribute("edit", false);
 		
 		Object bookings = new BookingDAO().listBookingsByShowId(Integer.parseInt(request.getParameter("show_id").toString()));
 		request.setAttribute("bookings", bookings);
+		Object show = new ShowDAO().getShowById(Integer.parseInt(request.getParameter("show_id").toString()));
+		request.setAttribute("show", show);
 		
 		request.getRequestDispatcher("show.jsp").forward(request, response);
+	}
+	
+	public void editShowLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Show");
+		request.setAttribute("edit", true);
+		
+		Object bookings = new BookingDAO().listBookingsByShowId(Integer.parseInt(request.getParameter("show_id").toString()));
+		request.setAttribute("bookings", bookings);
+		Object show = new ShowDAO().getShowById(Integer.parseInt(request.getParameter("show_id").toString()));
+		request.setAttribute("show", show);
+		
+		request.getRequestDispatcher("show.jsp").forward(request, response);
+
+	}
+	
+	public void editBookingOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String bookingId = request.getParameter("bookingId").toString();
+		String requestedDatetime = request.getParameter("requestedDatetime").toString();
+		String duration = request.getParameter("duration").toString();
+		//String confirmed = request.getParameter("confirmed").toString();
+		String confirmed = null;
+		new BookingDAO().editBookingDetails(Integer.parseInt(bookingId), requestedDatetime,
+				Integer.parseInt(duration), Boolean.parseBoolean(confirmed));
+		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
+
+	}
+	
+	public void editShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String showId = request.getParameter("showId").toString();
+		String start = request.getParameter("start").toString();
+		String end = request.getParameter("end").toString();
+		//String confirmed = request.getParameter("confirmed").toString();
+		String confirmed = null;
+		new ShowDAO().editShowDetails(Integer.parseInt(showId), start, end);
+		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
+
+	}
+	
+	public void deleteShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String showId = request.getParameter("showId").toString();
+		new ShowDAO().deleteShow(Integer.parseInt(showId));
 	}
 	
 	public void profileLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -228,7 +280,7 @@ public class OperationController extends HttpServlet {
 	String search_phrase = request.getParameter("username");
 	List<User> results = new UserDAO().getUsersByUsernameSearch(search_phrase);
 	request.setAttribute("results", results);
-	PrintWriter out= response.getWriter();
+	PrintWriter out = response.getWriter();
 	RequestDispatcher rd = getServletContext().getRequestDispatcher("/search.jsp");
 	rd.include(request, response);
 	}
