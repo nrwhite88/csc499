@@ -81,6 +81,65 @@ public class ShowDAO {
 		System.out.println(shows);
 		return shows;
 	}
+		
+	public List<Booking> listShowsByBookingId(int bid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Booking> bookings = session.createQuery("select s from Shows s "
+				+ "where booking_ID=?1").setParameter(1, bid).getResultList();
+		session.getTransaction().commit();
+		System.out.println(bookings);
+		return bookings;
+	}
+	
+	public List<Object> listShowsWithDetailsByShowId(int sid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		/**
+		List<Booking> bookings =  session.createQuery("select bookings "
+				+ "from Shows as shows "
+				+ "inner join shows.bookings as bookings "
+				+ "where show_ID=4").getResultList();
+		session.getTransaction().commit();
+		*/
+		
+		/**
+		List<Object> something =  session.createQuery("select s from Shows s "
+				+ "where booking_id IN "
+				+ "(select b.bookingId from Bookings b "
+				+ "where band_id=10)").getResultList();
+		session.getTransaction().commit();
+		*/
+		
+		List<Object> something =  session.createQuery("select s from Shows s "
+				+ "where booking_id=10").getResultList();
+		session.getTransaction().commit();
+		
+		System.out.println("Something" + something);
+		return something;
+	}
+	
+	public List<Show> listShowsByBandId(int uid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Show> shows =  session.createQuery("from Users "
+				+ "inner join Users.Bookings "
+				+ "inner join Bookings.Shows "
+				+ "WHERE Users.Bookings.Shows.show_id=?1").setParameter(1, uid).getResultList();
+		session.getTransaction().commit();
+		System.out.println(shows);
+		return shows;
+	}
 	
 	public List<User> listUsers() {
 		factory = getSessionFactory();

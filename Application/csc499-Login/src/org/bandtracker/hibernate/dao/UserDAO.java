@@ -1,5 +1,6 @@
 package org.bandtracker.hibernate.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.bandtracker.hibernate.entity.Booking;
@@ -43,6 +44,45 @@ public class UserDAO {
 		session.save(user);
 		session.getTransaction().commit();
 		System.out.println(user.getUsername() + "was added");	
+	}
+	
+	public int getUserIdByUsername(String username) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		List<User> user =  (List)session.createQuery("from Users"
+				+ "where username=?!").setParameter(1, username).getSingleResult();
+		session.getTransaction().commit();	
+		System.out.println(user);
+
+		return user.get(0).getUserId();
+	}
+	
+	public List<User> getUsersByUsernameSearch(String username) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from Users where username like :userName";
+		List<User> users = (List<User>)session.createQuery(query).setString("userName", "%" + username + "%").list();
+
+		return users;
+	}
+	
+	public User getUserById(int uid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		User user = (User) session.get(User.class, uid);
+
+		session.getTransaction().commit();
+		System.out.println(user);
+		
+		return user;
 	}
 	
 	public List<User> listUsers() {

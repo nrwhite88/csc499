@@ -13,11 +13,18 @@
 
 <%
 String username = null;
+String userId = null;
+String userType = null;
 Cookie[] cookies = request.getCookies();
 	if(cookies !=null){
 		for(Cookie cookie : cookies){
 			if(cookie.getName().equals("user"))
 				username = cookie.getValue();
+			if(cookie.getName().equals("userId"))
+				userId = cookie.getValue();
+			if(cookie.getName().equals("userType"))
+				userType = cookie.getValue();
+			
 		}
 	}
 
@@ -63,7 +70,7 @@ List<User> userList = (List)request.getAttribute("userList");
 						}
 						out.print("<td>" + userList.get(i).getTown() + "</td>");
 						out.print("<td>" + userList.get(i).getWebsiteURL() + "</td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
+						out.print("<td><form action='" + request.getContextPath() + "/operation?"
 								+ "&user_id=" + booker_id + "' method='get'>"
 								+ "<input type='submit' value='VIEW PROFILE'>"
 								+ "<input type='hidden' name='page' value='profile'>"
@@ -99,7 +106,7 @@ List<User> userList = (List)request.getAttribute("userList");
 </div>
 <% 
 	user_type = user_type.toString().toLowerCase();
-	if (user_type.equals("bar")) {
+	if (user_type.toLowerCase().equals("bar")) {
 		out.print(
 		"<div class='container mtb'>" +
 			"<div class='row'>" +
@@ -128,7 +135,7 @@ List<User> userList = (List)request.getAttribute("userList");
 								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
 								+ "</form></td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
+						out.print("<td><form action='" + request.getContextPath() + "/operation?"
 								+ "&show_id=" + show_id + "' method='get'>"
 								+ "<input type='submit' value='VIEW SHOW'>"
 								+ "<input type='hidden' name='page' value='show'>"
@@ -150,7 +157,7 @@ List<User> userList = (List)request.getAttribute("userList");
 				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'></form>");
 	}
 	
-	else if (user_type.equals("band")) {
+	else if (user_type.toLowerCase().equals("band")) {
 		out.print(
 		"<div class='container mtb'>" +
 			"<div class='row'>" +

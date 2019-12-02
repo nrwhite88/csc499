@@ -5,11 +5,35 @@
 <%@ page import="java.util.List" %>
  
 <%
+String username = null;
+String userId = null;
+String userType = null;
+Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals("user"))
+				username = cookie.getValue();
+			if(cookie.getName().equals("userId"))
+				userId = cookie.getValue();
+			if(cookie.getName().equals("userType"))
+				userType = cookie.getValue();
+			
+		}
+	}
+
+if(username == null) response.sendRedirect("login.jsp");
+%> 
+
+<%
 List<User> userList = (List)request.getAttribute("userList");
 String user_type = request.getAttribute("user_type").toString();
 
+System.out.println("User type: " + user_type);
+
+if(! userType.toString().toLowerCase().equals("fan")) {
+
 		out.print(
-		"<div class='container mtb'>" +
+		"<div class='container mb'>" +
 			"<div class='row'>" +
 				"<div class='col-lg-6'>" +
 					"<strong>Available shows:</strong>" +
@@ -20,7 +44,7 @@ String user_type = request.getAttribute("user_type").toString();
 									"<th>START</th>" +
 									"<th>END</th>" +
 								"</thead>");
-
+					
 					List<Show> showList = (List)request.getAttribute("shows");
 					int booker_id = Integer.parseInt(request.getParameter("booker"));
 					int show_id;
@@ -30,11 +54,13 @@ String user_type = request.getAttribute("user_type").toString();
 						out.print("<td>" + show_id + "</td>");
 						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
 						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
-						out.print("<td>"
-								+ "<input type='radio' name='show_id' value='" + show_id + "'>"
-								+ "<input type='hidden' name='booker_id' value='" + booker_id + "'>"
-								+ "<input type='hidden' name='bookee_id' value='" + request.getParameter("bookee") + "'>"
-								+ "</td>");
+						if(request.getParameter("page").equals("book")) {
+							out.print("<td>"
+									+ "<input type='radio' name='show_id' value='" + show_id + "'>"
+									+ "<input type='hidden' name='booker_id' value='" + booker_id + "'>"
+									+ "<input type='hidden' name='bookee_id' value='" + request.getParameter("bookee") + "'>"
+									+ "</td>");
+						}
 					}
 					
 		out.print(					
@@ -44,6 +70,7 @@ String user_type = request.getAttribute("user_type").toString();
 		"</div>"
 				);
 
+}
 %>
 <br>
 

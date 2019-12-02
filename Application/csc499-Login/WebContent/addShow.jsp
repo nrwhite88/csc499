@@ -21,6 +21,7 @@
 String bar_id = request.getParameter("bar_id");
 %>
 
+<center>
 <h1>Enter show details:</h1>
 <form action="${pageContext.request.contextPath}/operation" method="post">
 	Start Datetime:<input type="text" name="start_datetime" required="required"/><br/>
@@ -30,5 +31,6 @@ String bar_id = request.getParameter("bar_id");
 <input type="hidden" name="form" value="addShowOperation">
 <input type="submit" value="Create Show">
 </form>
-
+</center>
+<br><br>
 <c:import url="footer.jsp"></c:import>

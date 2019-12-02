@@ -1,8 +1,6 @@
 package org.bandtracker.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
 import org.bandtracker.hibernate.dao.UserDAO;
-import org.bandtracker.hibernate.entity.Booking;
-import org.bandtracker.hibernate.entity.Show;
 import org.bandtracker.hibernate.entity.User;
 
 @WebServlet("/test")
@@ -53,17 +49,36 @@ public class TestController extends HttpServlet {
 		//Booking booking = new Booking(datetimeOfRequest, 1, "2019-12-12 20:00:00");
 		//new BookingDAO().addBooking(booking);
 		
-		Object shows = new ShowDAO().listShowsByUserId(12);
+		//Object shows = new ShowDAO().listShowsByUserId(12);
+		//request.setAttribute("shows", shows);
 		
 		//Add show with persistence, default user
 		//Show show = new Show("2019-12-12 19:00:00", "2019-12-12 23:00:00");
 		//new ShowDAO().addShow(show);
 		
+		//Get shows from band id
+
+		
+		/**
+		List<Object> band_shows = null;
+		//(List)new ShowDAO().listShowsByBookingId(Integer.parseInt(band_bookings.get(0).toString()));
+		
+		for(int i=0; i<band_bookings.size(); i++) {
+			band_shows.add(new ShowDAO().listShowsByBookingId(Integer.parseInt(band_bookings.get(i).toString())));
+		}
+		*/
+		
+		
+		//Object bookings = new BookingDAO().listBookingsByShowId(4);
+		//System.out.println("Boooooooookings: " + bookings);
+		
+		Object shows = new ShowDAO().listShowsWithDetailsByShowId(4);
+		System.out.println(shows);
+		
 		//Retrieve list of all users
 		List<User> userList = new UserDAO().listUsers();
 		System.out.println(userList);
 		request.setAttribute("userList", userList);
-		request.setAttribute("shows", shows);
 		
 		request.getRequestDispatcher("listUsers.jsp").forward(request, response);
 	}

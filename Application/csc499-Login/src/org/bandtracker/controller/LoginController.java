@@ -67,18 +67,19 @@ public class LoginController extends HttpServlet {
 		// Get recommendations list based on user type
 		List<User> userList = new ArrayList<>();
 		String user_type = currentUser.get(0).getUserType();
+		String user_id = Integer.toString(currentUser.get(0).getUserId());
 		request.setAttribute("type", user_type);
 		userList = new UserModel().listUsers(dataSource, user_type);
 		request.setAttribute("userList", userList);
 		
 		// Get calendar list based on user type
-		if(currentUser.get(0).getUserType().equals("BAR")) {
+		if(user_type.equals("BAR")) {
 			Object shows = new ShowDAO().listShowsByUserId(currentUser.get(0).getUserId());
 			System.out.println("It's " + currentUser);
 			request.setAttribute("shows", shows);
 		}
-		else if (currentUser.get(0).getUserType().equals("BAND")) {
-			Object bookings = new BookingDAO().listBookingsByUserId(currentUser.get(0).getUserId());
+		else if (user_type.equals("BAND")) {
+			Object bookings = new BookingDAO().listBookingsByBandId(currentUser.get(0).getUserId());
 			System.out.println("It's " + currentUser);
 			request.setAttribute("bookings", bookings);
 		}
@@ -86,6 +87,12 @@ public class LoginController extends HttpServlet {
 		// Start session and forward user to their home page
 		if(! currentUser.isEmpty()) {
 			session = authenticate(request, response, username);
+			Cookie userTypeCookie = new Cookie("userType", user_type);
+			Cookie userIdCookie = new Cookie("userId", user_id);
+			userTypeCookie.setMaxAge(15*60);
+			userIdCookie.setMaxAge(15*60);
+			response.addCookie(userTypeCookie);
+			response.addCookie(userIdCookie);
 			return session;
 		}
 		else {
@@ -96,7 +103,7 @@ public class LoginController extends HttpServlet {
 	protected HttpSession authenticate(HttpServletRequest request, HttpServletResponse response, String username) throws ServletException, IOException {
 		request.getSession().invalidate();
 		HttpSession newSession = request.getSession(true);
-		newSession.setMaxInactiveInterval(3);
+		//newSession.setMaxInactiveInterval(3);
 		newSession.setAttribute("username", username);
 		String encode = response.encodeURL(request.getContextPath());
 		

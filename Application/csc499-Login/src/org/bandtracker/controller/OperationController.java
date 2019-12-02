@@ -1,18 +1,14 @@
 package org.bandtracker.controller;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +19,10 @@ import javax.sql.DataSource;
 
 import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
+import org.bandtracker.hibernate.dao.UserDAO;
 import org.bandtracker.hibernate.entity.Booking;
 import org.bandtracker.hibernate.entity.Show;
 import org.bandtracker.hibernate.entity.User;
-import org.bandtracker.model.BookingModel;
-import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/operation")
@@ -54,6 +49,12 @@ public class OperationController extends HttpServlet {
 		case "addshow":
 			addShowFormLoader(request, response);
 			break;
+		case "profile":
+			profileLoader(request, response);
+		case "show":
+			showLoader(request, response);
+		case "search":
+			searchFormLoader(request, response);
 		default:
 			errorPage(request, response);
 		}
@@ -90,6 +91,8 @@ public class OperationController extends HttpServlet {
 			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString());
 			addShowOperation(request, response, dataSource, newShow);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
+		case "searchoperation":
+			searchOperation(request, response);
 		default:
 			break;
 		}
@@ -191,6 +194,43 @@ public class OperationController extends HttpServlet {
 	public void addShowFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Add Show");
 		request.getRequestDispatcher("addShow.jsp").forward(request, response);
+	}
+	
+	public void showLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Show");
+		
+		Object bookings = new BookingDAO().listBookingsByShowId(Integer.parseInt(request.getParameter("show_id").toString()));
+		request.setAttribute("bookings", bookings);
+		
+		request.getRequestDispatcher("show.jsp").forward(request, response);
+	}
+	
+	public void profileLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Profile");
+		int user_id = Integer.parseInt(request.getParameter("bookee"));
+		User user = new UserDAO().getUserById(user_id);
+		Object shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+		Object bookings = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+		System.out.println("Boooooooookings: " + bookings);
+		request.setAttribute("user", user);
+		request.setAttribute("user_type", user.getUserType());
+		request.setAttribute("shows", shows);
+		request.getRequestDispatcher("profile.jsp").forward(request, response);
+	}
+	
+	public void searchFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Search");
+		request.getRequestDispatcher("search.jsp").forward(request, response);
+	}
+	
+	public void searchOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	String search_phrase = request.getParameter("username");
+	List<User> results = new UserDAO().getUsersByUsernameSearch(search_phrase);
+	request.setAttribute("results", results);
+	PrintWriter out= response.getWriter();
+	RequestDispatcher rd = getServletContext().getRequestDispatcher("/search.jsp");
+	rd.include(request, response);
 	}
 	
 	public void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

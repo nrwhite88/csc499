@@ -72,7 +72,7 @@ public class BookingDAO {
 		System.out.println(booking.getRequestedDatetime() + "booking was added for" + band.getUsername());	
 	}
 	
-	public List<Booking> listBookingsByUserId(int uid) {
+	public List<Booking> listBookingsByBandId(int uid) {
 
 		factory = getSessionFactory();
 		PreparedStatement statement = null;
@@ -80,6 +80,19 @@ public class BookingDAO {
 		session.beginTransaction();
 		List<Booking> bookings =  session.createQuery("select b from Bookings b "
 				+ "where band_id=?1").setParameter(1, uid).getResultList();
+		session.getTransaction().commit();
+		System.out.println(bookings);
+		return bookings;
+	}
+	
+	public List<Booking> listBookingsByShowId(int sid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Booking> bookings =  session.createQuery("select b from Bookings b "
+				+ "where show_id=?1").setParameter(1, sid).getResultList();
 		session.getTransaction().commit();
 		System.out.println(bookings);
 		return bookings;
