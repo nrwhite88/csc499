@@ -50,6 +50,8 @@ public class User {
 	private String password;
 	@Column(name="bio")
 	private String bio;
+	@Column(name="state")
+	private String state;
 	
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="mUser")
@@ -224,6 +226,16 @@ public class User {
 		this.bio = bio;
 	}
 	
+	
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public Boolean isEmpty() {
 		if (username.isEmpty()) {
 			return true;

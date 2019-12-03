@@ -49,22 +49,28 @@ Show show = (Show)request.getAttribute("show");
 			<table>
 				<thead>
 					<th>ID</th>
+					<th>Name</th>
 					<th>Start</th>
 					<th>End</th>
+					<th>Description</th>
 				</thead>
 					<% 
 					if(! edit) {
 						out.print("<td>" + show.getShowId() + "</td>");
+						out.print("<td>" + show.getShowName() + "</td>");
 						out.print("<td>" + show.getStartDatetime() + "</td>");
 						out.print("<td>" + show.getEndDatetime() + "</td>");
+						out.print("<td>" + show.getShowDescription() + "</td>");
 					}
 					else {
 							int showId = show.getShowId();
 							out.print("<tr>");
 							out.print("<td>" + showId + "</td>");
 							out.print("<form action='" + request.getContextPath() + "/operation' method='post'>"
+									+ "<td><input type='text' name='name' value='" + show.getShowName() + "'></td>"
 									+ "<td><input type='text' name='start' value='" + show.getStartDatetime() + "'></td>"
 									+ "<td><input type='text' name='end' value='" + show.getEndDatetime() + "'></td>"
+									+ "<td><input type='text' name='description' value='" + show.getShowDescription() + "'></td>"
 									+ "<input type='hidden' name='showId' value='" + showId + "'>"
 									+ "<input type='hidden' name='form' value='editShowOperation'>"
 									+ "<td><input type='submit' value='Submit'></td></form>"
@@ -103,7 +109,8 @@ Show show = (Show)request.getAttribute("show");
 						out.print("<td>" + booking.getDatetimeOfRequest() + "</td>");
 						out.print("<td>" + booking.getRequestedDatetime() + "</td>");
 						out.print("<td>" + booking.getDuration() + "</td>");
-						out.print("<td>" + booking.getConfirmed() + "</td>");
+						out.print("<td>" + booking.getBarConfirmed() + "</td>");
+						out.print("<td>" + booking.getBandConfirmed() + "</td>");
 						out.print("</tr>");
 						}
 					}
@@ -118,7 +125,8 @@ Show show = (Show)request.getAttribute("show");
 									+ "<td><input type='text' name='duration' value='" + booking.getDuration() + "'></td>"
 									//+ "<td><input type='radio' name='confirmed' value='true'>Confirm</td>"
 									//+ "<td><input type='radio' name='confirmed' value='false'>Deny</td>"
-									+ "<td>(Currently " + booking.getConfirmed() + ")</td>"
+									+ "<td>Bar: " + booking.getBarConfirmed() + "</td>"
+									+ "<td>Band: " + booking.getBandConfirmed() + "</td>"
 									+ "<input type='hidden' name='bookingId' value='" + bookingId + "'>"
 									+ "<input type='hidden' name='form' value='editBookingOperation'>"
 									+ "<td><input type='submit' value='Submit'></td></form>"

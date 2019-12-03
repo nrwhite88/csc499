@@ -14,6 +14,7 @@ CREATE TABLE Users      (
 	website_URL VARCHAR(100),
 	password VARCHAR(100),
     bio VARCHAR(500),
+    state CHAR(2),
 
 	PRIMARY KEY(user_ID)
 
@@ -58,8 +59,9 @@ CREATE TABLE Bookings	(
 	booking_ID INT NOT NULL AUTO_INCREMENT,
 	requested_datetime DATETIME,
 	duration_hrs TINYINT,
-	confirmed BOOLEAN,
 	datetime_of_request DATETIME,
+    bar_confirmed BOOLEAN,
+    band_confirmed BOOLEAN,
 
 	PRIMARY KEY(booking_ID)
 );
@@ -68,6 +70,8 @@ CREATE TABLE Shows  (
     show_ID INT NOT NULL AUTO_INCREMENT,
     start_datetime DATETIME,
     end_datetime DATETIME,
+    show_name VARCHAR(100),
+    show_description VARCHAR (500),
     
     PRIMARY KEY(show_ID)
 );

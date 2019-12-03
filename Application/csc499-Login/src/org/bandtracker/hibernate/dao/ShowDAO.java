@@ -155,6 +155,19 @@ public class ShowDAO {
 		return shows;
 	}
 	
+	public List<Show> listShows() {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<Show> shows =  session.createQuery("from Shows s "
+				+ "order by s.startDatetime").getResultList();
+		session.getTransaction().commit();
+		System.out.println(shows);
+		return shows;
+	}
+	
 	public List<User> listUsers() {
 		factory = getSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -165,7 +178,7 @@ public class ShowDAO {
 		return users;
 	}
 	
-	public void editShowDetails(int showId, String startDatetime, String endDatetime) {
+	public void editShowDetails(int showId, String startDatetime, String endDatetime, String showName, String showDescription) {
 		factory = getSessionFactory();
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
@@ -173,6 +186,8 @@ public class ShowDAO {
 		Show show = (Show) session.get(Show.class, showId);
 		show.setStartDatetime(startDatetime);
 		show.setEndDatetime(endDatetime);
+		show.setShowName(showName);
+		show.setShowDescription(showDescription);
 		
 		Show mergedShow = (Show) session.merge(show);
 		session.getTransaction().commit();

@@ -26,6 +26,10 @@ public class Show {
 	String startDatetime;
 	@Column(name="end_datetime")
 	String endDatetime;
+	@Column(name="show_name")
+	String showName;
+	@Column(name="show_description")
+	String showDescription;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinTable(name="ShowVenues",
@@ -45,6 +49,13 @@ public class Show {
 		this.endDatetime = endDatetime;
 	}
 	
+	public Show(String startDatetime, String endDatetime, String showName, String showDescription) {
+		this.startDatetime = startDatetime;
+		this.endDatetime = endDatetime;
+		this.showName = showName;
+		this.showDescription = showDescription;
+	}
+	
 	public int getShowId() {
 		return showId;
 	}
@@ -62,6 +73,23 @@ public class Show {
 	}
 	public void setEndDatetime(String endDatetime) {
 		this.endDatetime = endDatetime;
+	}
+	
+
+	public String getShowName() {
+		return showName;
+	}
+
+	public void setShowName(String showName) {
+		this.showName = showName;
+	}
+
+	public String getShowDescription() {
+		return showDescription;
+	}
+
+	public void setShowDescription(String showDescription) {
+		this.showDescription = showDescription;
 	}
 
 	public User getmUser() {

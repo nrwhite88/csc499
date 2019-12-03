@@ -21,14 +21,16 @@ public class Booking {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="booking_ID")
 	Integer bookingId;
-	@Column(name="confirmed")
-	Boolean confirmed;
 	@Column(name="datetime_of_request")
 	String datetimeOfRequest;
 	@Column(name="duration_hrs")
 	Integer duration;
 	@Column(name="requested_datetime")
 	String requestedDatetime;
+	@Column(name="bar_confirmed")
+	Boolean barConfirmed;
+	@Column(name="band_confirmed")
+	Boolean bandConfirmed;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinTable(name="BandBookings",
@@ -51,6 +53,8 @@ public class Booking {
 		this.datetimeOfRequest = datetimeOfRequest;
 		this.duration = duration;
 		this.requestedDatetime = requestedDatetime;
+		this.barConfirmed = false;
+		this.bandConfirmed = false;
 	}
 
 	public int getBookingId() {
@@ -59,14 +63,6 @@ public class Booking {
 
 	public void setBookingId(int bookingId) {
 		this.bookingId = bookingId;
-	}
-
-	public Boolean getConfirmed() {
-		return confirmed;
-	}
-
-	public void setConfirmed(Boolean confirmed) {
-		this.confirmed = confirmed;
 	}
 
 	public String getDatetimeOfRequest() {
@@ -91,6 +87,22 @@ public class Booking {
 
 	public void setRequestedDatetime(String requestedDatetime) {
 		this.requestedDatetime = requestedDatetime;
+	}
+
+	public Boolean getBarConfirmed() {
+		return barConfirmed;
+	}
+
+	public void setBarConfirmed(Boolean barConfirmed) {
+		this.barConfirmed = barConfirmed;
+	}
+
+	public Boolean getBandConfirmed() {
+		return bandConfirmed;
+	}
+
+	public void setBandConfirmed(Boolean bandConfirmed) {
+		this.bandConfirmed = bandConfirmed;
 	}
 
 	public User getmUser() {

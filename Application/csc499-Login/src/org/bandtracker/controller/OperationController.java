@@ -61,6 +61,10 @@ public class OperationController extends HttpServlet {
 			break;
 		case "editshow":
 			editShowLoader(request, response);
+			break;
+		case "upcomingshows":
+			upcomingShowsLoader(request, response);
+			break;
 		case "gohome":
 			homeLoader(request, response);
 			break;
@@ -97,7 +101,8 @@ public class OperationController extends HttpServlet {
 			bookOperation(request, response, dataSource, newBooking);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		case "addshowoperation":
-			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString());
+			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString(),
+					request.getParameter("show_name"), request.getParameter("show_description"));
 			addShowOperation(request, response, dataSource, newShow);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		case "searchoperation":
@@ -236,10 +241,8 @@ public class OperationController extends HttpServlet {
 		String bookingId = request.getParameter("bookingId").toString();
 		String requestedDatetime = request.getParameter("requestedDatetime").toString();
 		String duration = request.getParameter("duration").toString();
-		//String confirmed = request.getParameter("confirmed").toString();
-		String confirmed = null;
 		new BookingDAO().editBookingDetails(Integer.parseInt(bookingId), requestedDatetime,
-				Integer.parseInt(duration), Boolean.parseBoolean(confirmed));
+				Integer.parseInt(duration));
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
 
 	}
@@ -248,9 +251,9 @@ public class OperationController extends HttpServlet {
 		String showId = request.getParameter("showId").toString();
 		String start = request.getParameter("start").toString();
 		String end = request.getParameter("end").toString();
-		//String confirmed = request.getParameter("confirmed").toString();
-		String confirmed = null;
-		new ShowDAO().editShowDetails(Integer.parseInt(showId), start, end);
+		String name = request.getParameter("name").toString();
+		String description = request.getParameter("description").toString();
+		new ShowDAO().editShowDetails(Integer.parseInt(showId), start, end, name, description);
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
 
 	}
@@ -276,6 +279,15 @@ public class OperationController extends HttpServlet {
 	public void searchFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Search");
 		request.getRequestDispatcher("search.jsp").forward(request, response);
+	}
+
+	public void upcomingShowsLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Upcoming Shows");
+		
+		List<Show> shows = new ShowDAO().listShows();
+		request.setAttribute("shows", shows);
+		
+		request.getRequestDispatcher("displayUpcomingShows.jsp").forward(request, response);
 	}
 	
 	public void searchOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -24,8 +24,10 @@ String bar_id = request.getParameter("bar_id");
 <center>
 <h1>Enter show details:</h1>
 <form action="${pageContext.request.contextPath}/operation" method="post">
-	Start Datetime:<input type="text" name="start_datetime" required="required"/><br/>
-	End Datetime: <input type="text" name="end_datetime" required="required"/><br/>
+	Start Datetime:<br/><input type="text" name="start_datetime" required="required"/><br/><br/>
+	End Datetime: <br/><input type="text" name="end_datetime" required="required"/><br/><br/>
+	Show name: <br/><input type="text" name="show_name" required="required"/><br/><br/>
+	Description: <br/><textarea rows="4" cols="50" name="show_description" maxlength="500"/></textarea><br/>
 <br/>
 <input type="hidden" name="bar_id" value=<% out.println(bar_id); %>>
 <input type="hidden" name="form" value="addShowOperation">

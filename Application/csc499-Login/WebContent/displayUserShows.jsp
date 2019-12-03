@@ -20,18 +20,14 @@ Cookie[] cookies = request.getCookies();
 			
 		}
 	}
-
 if(username == null) response.sendRedirect("login.jsp");
 %> 
 
 <%
 List<User> userList = (List)request.getAttribute("userList");
 String user_type = request.getAttribute("user_type").toString();
-
 System.out.println("User type: " + user_type);
-
 if(! userType.toString().toLowerCase().equals("fan")) {
-
 		out.print(
 		"<div class='container mb'>" +
 			"<div class='row'>" +
@@ -69,7 +65,6 @@ if(! userType.toString().toLowerCase().equals("fan")) {
 			"</div>" +
 		"</div>"
 				);
-
 }
 %>
 <br>

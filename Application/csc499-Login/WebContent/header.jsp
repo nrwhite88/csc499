@@ -69,6 +69,7 @@ td
           <li><a href="index.jsp">HOME</a></li>
           <li><a href="myCalendar.jsp">CALENDAR</a></li>
           <li><a href="myBooking.jsp">BOOKING</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">ETC<b class="caret"></b></a>

@@ -57,7 +57,8 @@ List<Booking> bookings = (List)request.getAttribute("bookings");
 						out.print("<td>" + booking.getRequestedDatetime() + "</td>");
 						out.print("<td>" + booking.getDuration() + "</td>");
 						out.print("<td>" + booking.getDatetimeOfRequest() + "</td>");
-						out.print("<td>" + booking.getConfirmed() + "</td>");
+						out.print("<td>Bar: " + booking.getBarConfirmed() + "</td>");
+						out.print("<td>Band: " + booking.getBandConfirmed() + "</td>");
 						out.print("</tr>");
 						}
 					%>

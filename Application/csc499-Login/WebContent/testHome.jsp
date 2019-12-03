@@ -176,25 +176,37 @@ List<User> userList = (List)request.getAttribute("userList");
 					List<Booking> bookingList = (List)request.getAttribute("bookings");
 					int booking_id;
 					for(int i=0; i<bookingList.size(); i++) {
-						String confirmed = null;
+						String bar_confirmed = null;
+						String band_confirmed = null;
 						booking_id = bookingList.get(i).getBookingId();
 						String datetime = bookingList.get(i).getRequestedDatetime();
 						int duration = bookingList.get(i).getDuration();
-						Boolean conf = bookingList.get(i).getConfirmed();
-						if (conf == null) {
-							confirmed = "Pending";
+						Boolean bar_conf = bookingList.get(i).getBarConfirmed();
+						Boolean band_conf = bookingList.get(i).getBandConfirmed();
+						if (bar_conf == null) {
+							bar_confirmed = "Pending";
 						}
-						else if (conf == false) {
-							confirmed = "Denied";
+						else if (bar_conf == false) {
+							bar_confirmed = "Denied";
 						}
-						else if (conf == true) {
-							confirmed = "Confirmed";
+						else if (bar_conf == true) {
+							bar_confirmed = "Confirmed";
+						}
+						if (band_conf == null) {
+							band_confirmed = "Pending";
+						}
+						else if (band_conf == false) {
+							band_confirmed = "Denied";
+						}
+						else if (band_conf == true) {
+							band_confirmed = "Confirmed";
 						}
 						out.print("<tr>");
 						out.print("<td>" + booking_id + "</td>");
 						out.print("<td>" + datetime + "</td>");
 						out.print("<td>" + duration + "</td>");
-						out.print("<td>" + confirmed + "</td>");
+						out.print("<td>Bar: " + bar_confirmed + "</td>");
+						out.print("<td>Band: " + band_confirmed + "</td>");
 						out.print("<td><form action='" + request.getContextPath() + "/site?"
 								+ "&booking_id=" + booking_id + "' method='get'>"
 								+ "<input type='submit' value='EDIT'>"
