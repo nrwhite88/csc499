@@ -34,6 +34,7 @@ public class OperationController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = request.getParameter("page");
+		System.out.println("Page: " + page);
 		page = page.toLowerCase();
 		
 		switch (page) {
@@ -60,6 +61,8 @@ public class OperationController extends HttpServlet {
 			break;
 		case "editshow":
 			editShowLoader(request, response);
+		case "gohome":
+			homeLoader(request, response);
 			break;
 		default:
 			errorPage(request, response);
@@ -283,6 +286,40 @@ public class OperationController extends HttpServlet {
 	PrintWriter out = response.getWriter();
 	RequestDispatcher rd = getServletContext().getRequestDispatcher("/search.jsp");
 	rd.include(request, response);
+	}
+	
+	public void homeLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "test home");
+
+		String userType = request.getParameter("userType");
+		int userId = Integer.parseInt(request.getParameter("userId").toString());
+		request.setAttribute("userType", userType);
+		request.setAttribute("userId", userId);
+		
+		User user = new UserDAO().getUserById(userId);
+		request.setAttribute("user", user);
+		
+		// Get recommendations list based on user type
+		List<User> userList = new ArrayList<>();
+		String user_type = userType;
+		String user_id = Integer.toString(userId);
+		request.setAttribute("type", user_type);
+		userList = new UserModel().listUsers(dataSource, user_type);
+		request.setAttribute("userList", userList);
+		
+		// Get calendar list based on user type
+		if(user_type.equals("BAR")) {
+			Object shows = new ShowDAO().listShowsByUserId(userId);
+			System.out.println("It's " + user);
+			request.setAttribute("shows", shows);
+		}
+		else if (user_type.equals("BAND")) {
+			Object bookings = new BookingDAO().listBookingsByBandId(userId);
+			System.out.println("It's " + user);
+			request.setAttribute("bookings", bookings);
+		}
+		
+		request.getRequestDispatcher("testHome.jsp").forward(request, response);
 	}
 	
 	public void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
