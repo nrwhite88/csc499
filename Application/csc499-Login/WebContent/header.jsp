@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="org.bandtracker.hibernate.entity.User" %>
+<%@ page import="org.bandtracker.hibernate.entity.Show" %>
+<%@ page import="org.bandtracker.hibernate.entity.Booking" %>
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +56,40 @@ td
   Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/solid-bootstrap-business-template/
   Licensing information: https://templatemag.com/license/
   -->
+  
+ <!--
+    <style>
+        div.container {
+            border: 1px solid red;
+        }
+        div.col-lg-8 {
+        	border: 1px solid blue;
+        }
+        div.col-lg-4 {
+        	border: 1px solid blue;
+        }
+    </style>
+-->
+  
 </head>
+
+<%
+String username = null;
+String userId = null;
+String userType = null;
+Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals("user"))
+				username = cookie.getValue();
+			if(cookie.getName().equals("userId"))
+				userId = cookie.getValue();
+			if(cookie.getName().equals("userType"))
+				userType = cookie.getValue();
+			
+		}
+	}
+%>
 
 <body>
 
@@ -66,15 +107,17 @@ td
       </div>
       <div class="navbar-collapse collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="index.jsp">HOME</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=${userId}&userype=${userType}">HOME</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=${userId}&userType=${userType}">HOME</a></li>
           <li><a href="myCalendar.jsp">CALENDAR</a></li>
           <li><a href="myBooking.jsp">BOOKING</a></li>
           <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=${userId}">HOST A SHOW</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">ETC<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="editProfile.jsp">PROFILE</a></li>
+              <li><a href="editProfile.jsp">MY PROFILE</a></li>
               <li><a href="about.jsp">ABOUT</a></li>
               <li><a href="myMessages.jsp">MESSAGES</a></li>
               <li><a href="myReviews.jsp">REVIEWS</a></li>

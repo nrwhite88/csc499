@@ -25,42 +25,6 @@ if(username == null) response.sendRedirect("login.jsp");
 %> 
 
 <%
-String user_type = request.getAttribute("user_type").toString();
-System.out.println("User type: " + user_type);
-if(user_type.toString().toLowerCase().equals("bar")) {
-		out.print(
-					"<strong>Available shows:</strong>" +
-						"<hr/>" +
-							"<table>" +
-								"<thead>" +
-									"<th>SHOW</th>" +
-									"<th>START</th>" +
-									"<th>END</th>" +
-								"</thead>");
-					
-					List<Show> showList = (List)request.getAttribute("shows");
-					int booker_id = Integer.parseInt(request.getParameter("booker"));
-					int show_id;
-					for(int i=0; i<showList.size(); i++) {
-						show_id = showList.get(i).getShowId();
-						out.print("<tr>");
-						out.print("<td>" + showList.get(i).getShowName() + "</td>");
-						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
-						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
-						if(request.getParameter("page").equals("book")) {
-							out.print("<td>"
-									+ "<input type='radio' name='show_id' value='" + show_id + "'>"
-									+ "<input type='hidden' name='booker_id' value='" + booker_id + "'>"
-									+ "<input type='hidden' name='bookee_id' value='" + request.getParameter("bookee") + "'>"
-									+ "</td>");
-						}
-					}
-					
-		out.print(					
-					"</table>"
-				);
-}
-if(user_type.toString().toLowerCase().equals("band")) {
 	out.print(
 				"<strong>Bookings:</strong>" +
 					"<hr/>" +
@@ -90,7 +54,6 @@ if(user_type.toString().toLowerCase().equals("band")) {
 	out.print(					
 				"</table>"
 			);
-}
 %>
 <br>
 

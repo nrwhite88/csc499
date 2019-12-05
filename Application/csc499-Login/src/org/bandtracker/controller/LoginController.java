@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 
 import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
+import org.bandtracker.hibernate.dao.UserDAO;
 import org.bandtracker.hibernate.entity.User;
 import org.bandtracker.model.UserModel;
 
@@ -43,7 +44,7 @@ public class LoginController extends HttpServlet {
 			//Set cookie expiration
 			loginCookie.setMaxAge(15*60);
 			response.addCookie(loginCookie);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			request.getRequestDispatcher("testHome.jsp").forward(request, response);
 			
 		}else{
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
@@ -62,13 +63,16 @@ public class LoginController extends HttpServlet {
 		// Get current user attributes
 		List<User> currentUser = new ArrayList<>();
 		currentUser = new UserModel().validateCredentials(dataSource, username, password);
-		request.setAttribute("user", currentUser);
+		User currUser = new UserDAO().getUserById(currentUser.get(0).getUserId());
+		request.setAttribute("user", currUser);
 		
 		// Get recommendations list based on user type
 		List<User> userList = new ArrayList<>();
 		String user_type = currentUser.get(0).getUserType();
 		String user_id = Integer.toString(currentUser.get(0).getUserId());
+		request.setAttribute("userId", user_id);
 		request.setAttribute("type", user_type);
+		request.setAttribute("userType", user_type);
 		userList = new UserModel().listUsers(dataSource, user_type);
 		request.setAttribute("userList", userList);
 		
@@ -83,6 +87,11 @@ public class LoginController extends HttpServlet {
 			System.out.println("It's " + currentUser);
 			request.setAttribute("bookings", bookings);
 		}
+		if(user_type.equals("FAN")) {
+			Object shows = new ShowDAO().listShows();
+			System.out.println("It's " + currentUser);
+			request.setAttribute("shows", shows);
+		}
 		
 		// Start session and forward user to their home page
 		if(! currentUser.isEmpty()) {
@@ -93,6 +102,7 @@ public class LoginController extends HttpServlet {
 			userIdCookie.setMaxAge(15*60);
 			response.addCookie(userTypeCookie);
 			response.addCookie(userIdCookie);
+			
 			return session;
 		}
 		else {

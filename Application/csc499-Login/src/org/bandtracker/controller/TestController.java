@@ -3,21 +3,29 @@ package org.bandtracker.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
 import org.bandtracker.hibernate.dao.UserDAO;
+import org.bandtracker.hibernate.entity.Booking;
+import org.bandtracker.hibernate.entity.Show;
 import org.bandtracker.hibernate.entity.User;
+import org.bandtracker.model.ShowModel;
+import org.bandtracker.model.UserModel;
 
 @WebServlet("/test")
 public class TestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	@Resource(name="jdbc/project")
+	private DataSource dataSource;
 
     public TestController() {
         super();
@@ -69,11 +77,12 @@ public class TestController extends HttpServlet {
 		*/
 		
 		
+		
 		//Object bookings = new BookingDAO().listBookingsByShowId(4);
 		//System.out.println("Boooooooookings: " + bookings);
 		
-		Object shows = new ShowDAO().listShowsWithDetailsByShowId(4);
-		System.out.println(shows);
+		String barName = new ShowModel().getBarNameByShowId(dataSource, 4);
+		System.out.println("The bar name is:" + barName);
 		
 		//Retrieve list of all users
 		List<User> userList = new UserDAO().listUsers();

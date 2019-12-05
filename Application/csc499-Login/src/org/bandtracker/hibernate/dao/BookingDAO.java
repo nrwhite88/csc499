@@ -72,6 +72,21 @@ public class BookingDAO {
 		System.out.println(booking.getRequestedDatetime() + "booking was added for" + band.getUsername());	
 	}
 	
+	public List<Booking> listBookings() {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		List<Booking> bookings =  session.createQuery("from Bookings b "
+				+ "order by b.requestedDatetime").getResultList();
+		
+		session.getTransaction().commit();
+		System.out.println(bookings);
+		return bookings;
+	}
+	
 	public List<Booking> listBookingsByBandId(int uid) {
 
 		factory = getSessionFactory();
@@ -96,6 +111,22 @@ public class BookingDAO {
 		session.getTransaction().commit();
 		System.out.println(bookings);
 		return bookings;
+	}
+	
+	public User getBandIdByBookingId(int bid) {
+
+		factory = getSessionFactory();
+		PreparedStatement statement = null;
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		User user =  (User)session.createQuery("select u from Users u "
+				+ "inner join Bookings.u "
+				+ "where booking_id=?1").setParameter(1, bid).getResultList();
+		
+		session.getTransaction().commit();
+		System.out.println(user);
+		return user;
 	}
 	
 	public List<User> listUsers() {

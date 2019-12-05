@@ -104,6 +104,30 @@ public class UserModel {
 		
 	}
 	
+	public Boolean followUser(DataSource dataSource, int followerId, int followeeId) {
+		Connection connect = null;
+		PreparedStatement stmt = null;
+		List<User> user = new ArrayList<>();
+
+		try {
+			connect = dataSource.getConnection();
+			
+			String query = "insert into Followings values(?,?)";
+			stmt = connect.prepareStatement(query);
+			stmt.setInt(1, followerId);
+			stmt.setInt(2, followeeId);
+			System.out.println(query);
+			
+			return stmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//FIXME add handler for case where username is taken
+			return false;
+		}
+		
+	}
+	
 	public List<User> listUsers(DataSource dataSource, String type) {
 		List<User> listUsers = new ArrayList<>();
 		Connection connect = null;

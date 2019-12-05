@@ -19,6 +19,10 @@ List<User> users = (List)request.getAttribute("userList");
 for(User user : users) {
 	out.println("<p>" + user.getUsername() + "</p>");
 }
+List<Show> shows = (List)request.getAttribute("shows");
+for (int i=0; i<shows.size(); i++) {
+	out.print(shows.get(i).getShowName());
+}
 %>
 
 </body>

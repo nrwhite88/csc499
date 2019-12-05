@@ -13,6 +13,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 public class ShowDAO {
@@ -109,7 +110,7 @@ public class ShowDAO {
 		return bookings;
 	}
 	
-	public List<Object> listShowsWithDetailsByShowId(int sid) {
+	public List<Object[]> listShowsWithDetailsByShowId(int sid) {
 
 		factory = getSessionFactory();
 		PreparedStatement statement = null;
@@ -132,14 +133,25 @@ public class ShowDAO {
 		session.getTransaction().commit();
 		*/
 		
-		List<Object> something =  session.createQuery("select s from Shows s "
-				+ "where booking_id=10").getResultList();
+		String HQL = "from Shows as show where show.mUser.bar_id=10";
+		Query<Object[]> query = session.createQuery(HQL);
+		List<Object[]> list = query.list();
+		for (Object[] obj : list) {
+			System.out.println("STARTING:" + obj[0]);
+			System.out.println(obj[1]);
+		}
+		session.getTransaction().commit();
+		
+		List<Object[]> something = session.createQuery("from Bookings, Shows").getResultList();
+		
+		//List<Object> something =  session.createQuery("from Shows s where bar_id=12").getResultList();
 		session.getTransaction().commit();
 		
 		System.out.println("Something" + something);
 		return something;
 	}
 	
+	//Check functionality
 	public List<Show> listShowsByBandId(int uid) {
 
 		factory = getSessionFactory();
@@ -161,8 +173,10 @@ public class ShowDAO {
 		PreparedStatement statement = null;
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
+		
 		List<Show> shows =  session.createQuery("from Shows s "
 				+ "order by s.startDatetime").getResultList();
+		
 		session.getTransaction().commit();
 		System.out.println(shows);
 		return shows;
@@ -206,7 +220,7 @@ public class ShowDAO {
 
 		session.getTransaction().commit();
 		
-		System.out.println("Edit successful.");	
+		System.out.println("Deletion successful.");	
 	}
 	
 }

@@ -29,6 +29,8 @@ Cookie[] cookies = request.getCookies();
 if(username == null) response.sendRedirect("login.jsp");
 %>
 
+<% List<List<Object>> bookingList = (List)request.getAttribute("bookings"); %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,19 +39,31 @@ if(username == null) response.sendRedirect("login.jsp");
 </head>
 <body>
 
+<div class="container mtb">
+	<center><h1>Book a Show</h1></center>
+	<center>
+	<h2>Enter booking details:</h2>
+	<form action="${pageContext.request.contextPath}/operation" method="post">
+		Datetime:<input type="text" name="datetime" required="required"/><br/>
+		Duration: <input type="text" name="duration" required="required"/><br/>
+		<br><br>
+	</center>
+	<div class="col-lg-6">
+		<h2>Your shows:</h2>
+		<jsp:include page="displayUserShows.jsp"></jsp:include>
+	</div>
+		<h2><%= bookingList.get(0).get(6).toString() %>'s gigs:</h2>
+	<div class="col-lg-6">
+		<jsp:include page="displayUserBookings.jsp"></jsp:include>
+	</div>
+</div>
 <center>
-
-<h1>Book a Show</h1>
-<br>
-<h2>Enter booking details:</h2>
-<form action="${pageContext.request.contextPath}/operation" method="post">
-	Datetime:<input type="text" name="datetime" required="required"/><br/>
-	Duration: <input type="text" name="duration" required="required"/><br/>
-<h2>Select show:</h2>
-<jsp:include page="displayUserShows.jsp"></jsp:include>
+<input type="hidden" name="userId" value=<%= userId %>>
+<input type="hidden" name="userType" value=<%= userType %>>
 <input type="hidden" name="form" value="bookOperation">
 <input type="submit" value="Send Request">
-</form>
 </center>
+
+</form>
 <br>
 <c:import url="footer.jsp"></c:import>

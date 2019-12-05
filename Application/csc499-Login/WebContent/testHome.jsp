@@ -28,9 +28,7 @@ Cookie[] cookies = request.getCookies();
 		}
 	}
 
-if(username == null) {
-	response.sendRedirect("login.jsp");
-}
+if(username == null) response.sendRedirect("login.jsp");
 %>
 
 <%
@@ -43,8 +41,7 @@ List<User> userList = (List)request.getAttribute("userList");
 
 <center><h1>Welcome, <%= public_name %></h1></center>
 <div class="container mtb">
-	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-8">
 			<strong>Check out these local folks:</strong>
 			<hr/>
 			<table>
@@ -104,20 +101,16 @@ List<User> userList = (List)request.getAttribute("userList");
 					%>
 			</table>
 		</div>
-	</div>
-</div>
+<div class="col-lg-4">
 <% 
 	user_type = user_type.toString().toLowerCase();
 	if (user_type.toLowerCase().equals("bar")) {
 		out.print(
-		"<div class='container mtb'>" +
-			"<div class='row'>" +
-				"<div class='col-lg-6'>" +
 					"<strong>Your upcoming shows:</strong>" +
 						"<hr/>" +
 							"<table>" +
 								"<thead>" +
-									"<th>SHOW ID</th>" +
+									"<th>SHOW</th>" +
 									"<th>START</th>" +
 									"<th>END</th>" +
 								"</thead>");
@@ -127,29 +120,20 @@ List<User> userList = (List)request.getAttribute("userList");
 					for(int i=0; i<showList.size(); i++) {
 						show_id = showList.get(i).getShowId();
 						out.print("<tr>");
-						out.print("<td>" + show_id + "</td>");
+						out.print("<td>" + showList.get(i).getShowName() + "</td>");
 						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
 						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
 						out.print("<td><form action='" + request.getContextPath() + "/operation?"
 								+ "&show_id=" + show_id + "' method='get'>"
-								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='submit' value='VIEW'>"
 								+ "<input type='hidden' name='page' value='editShow'>"
 								+ "<input type='hidden' name='user_id' value='" + userId + "'>"
-								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
-								+ "</form></td>");
-						out.print("<td><form action='" + request.getContextPath() + "/operation?"
-								+ "&show_id=" + show_id + "' method='get'>"
-								+ "<input type='submit' value='VIEW SHOW'>"
-								+ "<input type='hidden' name='page' value='show'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
 								+ "</form></td>");
 					}
 		out.print(					
 					"</table>" +
-				"</div>" +
-			"</div>" +
-		"</div>"
+				"</div>"
 				);
 		
 		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
@@ -161,9 +145,6 @@ List<User> userList = (List)request.getAttribute("userList");
 	
 	else if (user_type.toLowerCase().equals("band")) {
 		out.print(
-		"<div class='container mtb'>" +
-			"<div class='row'>" +
-				"<div class='col-lg-6'>" +
 					"<strong>Your gig requests:</strong>" +
 						"<hr/>" +
 							"<table>" +
@@ -209,33 +190,53 @@ List<User> userList = (List)request.getAttribute("userList");
 						out.print("<td>Band: " + band_confirmed + "</td>");
 						out.print("<td><form action='" + request.getContextPath() + "/site?"
 								+ "&booking_id=" + booking_id + "' method='get'>"
-								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='submit' value='VIEW'>"
 								+ "<input type='hidden' name='page' value='edit'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
-								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
-								+ "</form></td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
-								+ "&show_id=" + booking_id + "' method='get'>"
-								+ "<input type='submit' value='VIEW BOOKING'>"
-								+ "<input type='hidden' name='page' value='show'>"
 								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
 								+ "</form></td>");
 					}
 		out.print(					
 					"</table>" +
-				"</div>" +
-			"</div>" +
-		"</div>"
+				"</div>"
 				);
-		
-		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
-				+ "' method='get'>");
-		out.print("<input type='submit' value='Add Show'></center>"
-				+ "<input type='hidden' name='page' value='addShow'>"
-				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'>");
+	}
+
+	if (user_type.toLowerCase().equals("fan")) {
+		out.print(
+					"<strong>Upcoming shows:</strong>" +
+						"<hr/>" +
+							"<table>" +
+								"<thead>" +
+									"<th>SHOW</th>" +
+									"<th>START</th>" +
+									"<th>END</th>" +
+								"</thead>");
+					
+					List<Show> showList = (List)request.getAttribute("shows");
+					int show_id;
+					for(int i=0; i<showList.size() && i<10; i++) {
+						show_id = showList.get(i).getShowId();
+						out.print("<tr>");
+						out.print("<td>" + showList.get(i).getShowName() + "</td>");
+						out.print("<td>" + showList.get(i).getStartDatetime() + "</td>");
+						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
+						out.print("<td><form action='" + request.getContextPath() + "/operation?"
+								+ "&show_id=" + show_id + "' method='get'>"
+								+ "<input type='hidden' name='user_id' value='" + userId+ "'>"
+								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
+								+ "<input type='hidden' name='page' value='show'>"
+								+ "<input type='submit' value='VIEW SHOW'>"
+								+ "</form></td>");
+					}
+						out.print("</table><br>");
+						out.print("<center><form action='" + request.getContextPath() + "/operation? method='get'>"
+								+ "<input type='hidden' name='page' value='upcomingShows'>"
+								+ "<input type='submit' value='EVEN MORE SHOWS'>"
+								+ "</form></center>");
+					out.print("</div>");
 	}
 %>
 <br>
-
+</div>
 <c:import url="footer.jsp"></c:import>

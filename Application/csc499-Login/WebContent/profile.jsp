@@ -36,19 +36,20 @@ if(username == null) response.sendRedirect("login.jsp");
 %>
 
 <div class="container mb">
-<h1><%= user.getPublicName() %></h1>
-<h3>A <%= user.getUserType() %> from <%= user.getTown() %></h2><br/>
-<h4>Bio:</h4>
-<p><%= user.getBio() %></p>
-<h4>Contact:</h4>
-<p>Email: <%= user.getEmail() %><br/>Phone: <%= user.getPhone() %></p>
-<p>Address:<br/><%= user.getStreetAddress() %><br/><%= user.getTown()%><br/><%= user.getZipCode() %></p>
-<br/><br/>
+	<h1><center><%= user.getPublicName() %></center></h1></br>
+	<h3><center>A <%= user.getUserType() %> from <%= user.getTown() %></center></h3><br/></br>
+	<div class="col-lg-4">
+		<h4>Bio:</h4>
+		<p><%= user.getBio() %></p>
+		<h4>Contact:</h4>
+		<p>Email: <%= user.getEmail() %><br/>Phone: <%= user.getPhone() %></p>
+		<p>Address:<br/><%= user.getStreetAddress() %><br/><%= user.getTown()%><br/><%= user.getZipCode() %></p>
+	</div>
 
-<jsp:include page="displayUserShows.jsp"></jsp:include>
-
+	<div class="col-lg-8">
+		<jsp:include page="displayUserShows.jsp"></jsp:include>
+	</div>
 </div>
-
 <br>
 
 <c:import url="footer.jsp"></c:import>

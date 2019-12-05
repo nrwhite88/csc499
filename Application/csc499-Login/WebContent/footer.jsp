@@ -1,6 +1,5 @@
   <div id="footerwrap">
     <div class="container">
-      <div class="row">
         <div class="col-lg-4">
           <h4>It's a Box Social!</h4>
           <div class="hline-w"></div>
@@ -29,7 +28,6 @@
         </div>
 
       </div>
-    </div>
   </div>
 
   <div id="copyrights">

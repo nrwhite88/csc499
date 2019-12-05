@@ -23,6 +23,8 @@ import org.bandtracker.hibernate.dao.UserDAO;
 import org.bandtracker.hibernate.entity.Booking;
 import org.bandtracker.hibernate.entity.Show;
 import org.bandtracker.hibernate.entity.User;
+import org.bandtracker.model.BookingModel;
+import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/operation")
@@ -104,7 +106,7 @@ public class OperationController extends HttpServlet {
 			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString(),
 					request.getParameter("show_name"), request.getParameter("show_description"));
 			addShowOperation(request, response, dataSource, newShow);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			homeLoader(request, response);
 		case "searchoperation":
 			searchOperation(request, response);
 		case "editshowoperation":
@@ -164,7 +166,7 @@ public class OperationController extends HttpServlet {
 		String bandId = request.getParameter("bookee_id").toString();
 		String showId = request.getParameter("show_id").toString();
 		new BookingDAO().addBookingDetails(newBooking, Integer.parseInt(bandId), Integer.parseInt(showId));
-		
+		homeLoader(request, response);
 	}
 	
 	public void addShowOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
@@ -187,6 +189,7 @@ public class OperationController extends HttpServlet {
 	public void bookFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Object shows = null;
+		List<Object> bookings = null;
 		
 		// Get recommendations list based on user type
 		List<User> userList = new ArrayList<>();
@@ -198,11 +201,16 @@ public class OperationController extends HttpServlet {
 		// Get list of shows
 		if(user_type.equals("BAR")) {
 			shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("booker")));
+			bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource,
+					Integer.parseInt(request.getParameter("bookee")));
 		}
 		else if(user_type.equals("BAND")) {
 			shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+			bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource,
+					Integer.parseInt(request.getParameter("booker")));
 		}
 		request.setAttribute("shows", shows);
+		request.setAttribute("bookings", bookings);
 		request.setAttribute("title", "Book");
 		request.getRequestDispatcher("book.jsp").forward(request, response);
 	}
@@ -243,6 +251,7 @@ public class OperationController extends HttpServlet {
 		String duration = request.getParameter("duration").toString();
 		new BookingDAO().editBookingDetails(Integer.parseInt(bookingId), requestedDatetime,
 				Integer.parseInt(duration));
+		homeLoader(request, response);
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
 
 	}
@@ -255,24 +264,28 @@ public class OperationController extends HttpServlet {
 		String description = request.getParameter("description").toString();
 		new ShowDAO().editShowDetails(Integer.parseInt(showId), start, end, name, description);
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
-
+		homeLoader(request, response);
 	}
 	
 	public void deleteShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String showId = request.getParameter("showId").toString();
 		new ShowDAO().deleteShow(Integer.parseInt(showId));
+		homeLoader(request, response);
 	}
 	
 	public void profileLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Profile");
 		int user_id = Integer.parseInt(request.getParameter("bookee"));
 		User user = new UserDAO().getUserById(user_id);
-		Object shows = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
-		Object bookings = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+		Object shows = new ShowDAO().listShowsByUserId(user_id);
+		//Object bookings = new ShowDAO().listShowsByUserId(Integer.parseInt(request.getParameter("bookee")));
+		List<Object> bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource, user_id);
 		System.out.println("Boooooooookings: " + bookings);
+		
 		request.setAttribute("user", user);
 		request.setAttribute("user_type", user.getUserType());
 		request.setAttribute("shows", shows);
+		request.setAttribute("bookings", bookings);
 		request.getRequestDispatcher("profile.jsp").forward(request, response);
 	}
 	
@@ -284,9 +297,10 @@ public class OperationController extends HttpServlet {
 	public void upcomingShowsLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Upcoming Shows");
 		
-		List<Show> shows = new ShowDAO().listShows();
+		List<Object> shows = new ShowModel().listShowsWithVenue(dataSource);
 		request.setAttribute("shows", shows);
-		
+		System.out.println("Done!");
+
 		request.getRequestDispatcher("displayUpcomingShows.jsp").forward(request, response);
 	}
 	

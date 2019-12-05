@@ -41,8 +41,7 @@ List<User> userList = (List)request.getAttribute("userList");
 
 <center><h1>Welcome, <%= public_name %></h1></center>
 <div class="container mtb">
-	<div class="row">
-		<div class="col-lg-6">
+	<div class="col-lg-8">
 			<strong>Check out these local folks:</strong>
 			<hr/>
 			<table>
@@ -102,15 +101,11 @@ List<User> userList = (List)request.getAttribute("userList");
 					%>
 			</table>
 		</div>
-	</div>
-</div>
+<div class="col-lg-4">
 <% 
 	user_type = user_type.toString().toLowerCase();
 	if (user_type.toLowerCase().equals("bar")) {
 		out.print(
-		"<div class='container mtb'>" +
-			"<div class='row'>" +
-				"<div class='col-lg-6'>" +
 					"<strong>Your upcoming shows:</strong>" +
 						"<hr/>" +
 							"<table>" +
@@ -130,24 +125,15 @@ List<User> userList = (List)request.getAttribute("userList");
 						out.print("<td>" + showList.get(i).getEndDatetime() + "</td>");
 						out.print("<td><form action='" + request.getContextPath() + "/operation?"
 								+ "&show_id=" + show_id + "' method='get'>"
-								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='submit' value='VIEW'>"
 								+ "<input type='hidden' name='page' value='editShow'>"
 								+ "<input type='hidden' name='user_id' value='" + userId + "'>"
-								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
-								+ "</form></td>");
-						out.print("<td><form action='" + request.getContextPath() + "/operation?"
-								+ "&show_id=" + show_id + "' method='get'>"
-								+ "<input type='submit' value='VIEW SHOW'>"
-								+ "<input type='hidden' name='page' value='show'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='show_id' value='" + show_id + "'>"
 								+ "</form></td>");
 					}
 		out.print(					
 					"</table>" +
-				"</div>" +
-			"</div>" +
-		"</div>"
+				"</div>"
 				);
 		
 		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
@@ -159,9 +145,6 @@ List<User> userList = (List)request.getAttribute("userList");
 	
 	else if (user_type.toLowerCase().equals("band")) {
 		out.print(
-		"<div class='container mtb'>" +
-			"<div class='row'>" +
-				"<div class='col-lg-6'>" +
 					"<strong>Your gig requests:</strong>" +
 						"<hr/>" +
 							"<table>" +
@@ -200,31 +183,21 @@ List<User> userList = (List)request.getAttribute("userList");
 							band_confirmed = "Confirmed";
 						}
 						out.print("<tr>");
-						out.print("<td>" + booking_id + "</td>");
 						out.print("<td>" + datetime + "</td>");
 						out.print("<td>" + duration + "</td>");
 						out.print("<td>Bar: " + bar_confirmed + "</td>");
 						out.print("<td>Band: " + band_confirmed + "</td>");
 						out.print("<td><form action='" + request.getContextPath() + "/site?"
 								+ "&booking_id=" + booking_id + "' method='get'>"
-								+ "<input type='submit' value='EDIT'>"
+								+ "<input type='submit' value='VIEW'>"
 								+ "<input type='hidden' name='page' value='edit'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
-								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
-								+ "</form></td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
-								+ "&show_id=" + booking_id + "' method='get'>"
-								+ "<input type='submit' value='VIEW BOOKING'>"
-								+ "<input type='hidden' name='page' value='show'>"
 								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
 								+ "</form></td>");
 					}
 		out.print(					
 					"</table>" +
-				"</div>" +
-			"</div>" +
-		"</div>"
+				"</div>"
 				);
 		
 		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
@@ -234,6 +207,7 @@ List<User> userList = (List)request.getAttribute("userList");
 				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'>");
 	}
 %>
+</div>
 <br>
 
 <c:import url="footer.jsp"></c:import>

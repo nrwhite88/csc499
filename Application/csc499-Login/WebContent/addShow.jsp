@@ -16,8 +16,23 @@
 <title>Booking</title>
 </head>
 <body>
-
 <%
+String username = null;
+String userId = null;
+String userType = null;
+Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals("user"))
+				username = cookie.getValue();
+			if(cookie.getName().equals("userId"))
+				userId = cookie.getValue();
+			if(cookie.getName().equals("userType"))
+				userType = cookie.getValue();
+			
+		}
+	}
+if(username == null) response.sendRedirect("login.jsp");
 String bar_id = request.getParameter("bar_id");
 %>
 
@@ -30,6 +45,8 @@ String bar_id = request.getParameter("bar_id");
 	Description: <br/><textarea rows="4" cols="50" name="show_description" maxlength="500"/></textarea><br/>
 <br/>
 <input type="hidden" name="bar_id" value=<% out.println(bar_id); %>>
+<input type="hidden" name="userId" value=<%= userId %>>
+<input type="hidden" name="userType" value=<%= userType %>>
 <input type="hidden" name="form" value="addShowOperation">
 <input type="submit" value="Create Show">
 </form>
