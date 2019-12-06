@@ -47,7 +47,14 @@ if(username == null) response.sendRedirect("login.jsp");
 	</div>
 
 	<div class="col-lg-8">
-		<jsp:include page="displayUserShows.jsp"></jsp:include>
+	<% if (request.getAttribute("user_type").toString().toLowerCase().equals("bar")) {
+		%> <jsp:include page="displayUserShows.jsp"></jsp:include>
+	<%}
+	else if (request.getAttribute("user_type").toString().toLowerCase().equals("band")){
+		%> <jsp:include page="displayUserBookings.jsp"></jsp:include>
+	<%}%>
+	 
+		
 	</div>
 </div>
 <br>

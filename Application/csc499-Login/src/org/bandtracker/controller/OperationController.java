@@ -197,6 +197,7 @@ public class OperationController extends HttpServlet {
 		request.setAttribute("user_type", user_type);
 		userList = new UserModel().listUsers(dataSource, user_type);
 		request.setAttribute("userList", userList);
+		User user = new UserDAO().getUserById(Integer.parseInt(request.getParameter("bookee")));
 		
 		// Get list of shows
 		if(user_type.equals("BAR")) {
@@ -209,6 +210,7 @@ public class OperationController extends HttpServlet {
 			bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource,
 					Integer.parseInt(request.getParameter("booker")));
 		}
+		request.setAttribute("bookee", user.getPublicName());
 		request.setAttribute("shows", shows);
 		request.setAttribute("bookings", bookings);
 		request.setAttribute("title", "Book");

@@ -25,11 +25,8 @@ if(username == null) response.sendRedirect("login.jsp");
 %> 
 
 <%
-String user_type = request.getAttribute("user_type").toString();
-System.out.println("User type: " + user_type);
-if(user_type.toString().toLowerCase().equals("bar")) {
 		out.print(
-					"<strong>Available shows:</strong>" +
+					"<strong>Shows:</strong>" +
 						"<hr/>" +
 							"<table>" +
 								"<thead>" +
@@ -59,38 +56,6 @@ if(user_type.toString().toLowerCase().equals("bar")) {
 		out.print(					
 					"</table>"
 				);
-}
-if(user_type.toString().toLowerCase().equals("band")) {
-	out.print(
-				"<strong>Bookings:</strong>" +
-					"<hr/>" +
-						"<table>" +
-							"<thead>" +
-								"<th>BAR</th>" +
-								"<th>SHOW</th>" +
-								"<th>LOCATION</th>" +
-								"<th>START</th>" +
-								"<th>LENGTH</th>" +
-							"</thead>");
-				
-				List<List<Object>> bookingList = (List)request.getAttribute("bookings");
-				int booker_id = Integer.parseInt(request.getParameter("booker"));
-				int booking_id;
-				for(int i=0; i<bookingList.size(); i++) {
-					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());
-					out.print("<tr>");
-					out.print("<td>" + bookingList.get(i).get(10).toString() + "</td>");
-					out.print("<td>" + bookingList.get(i).get(8).toString() + "</td>");
-					out.print("<td>" + bookingList.get(i).get(12).toString() + ", " +
-							bookingList.get(i).get(13).toString() + "</td>");
-					out.print("<td>" + bookingList.get(i).get(1).toString() + "</td>");
-					out.print("<td>" + bookingList.get(i).get(2).toString() + " hrs</td>");
-				}
-				
-	out.print(					
-				"</table>"
-			);
-}
 %>
 <br>
 

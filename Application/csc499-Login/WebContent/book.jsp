@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
+<%@ page import="org.bandtracker.hibernate.entity.User" %>
 <%@ page import="org.bandtracker.hibernate.entity.Booking" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="header.jsp">
@@ -29,7 +30,21 @@ Cookie[] cookies = request.getCookies();
 if(username == null) response.sendRedirect("login.jsp");
 %>
 
-<% List<List<Object>> bookingList = (List)request.getAttribute("bookings"); %>
+<%
+List<List<Object>> bookingList = (List)request.getAttribute("bookings");
+String bookee = request.getAttribute("bookee").toString();
+String barRef = null;
+String bandRef = null;
+if(userType.toLowerCase().equals("bar")) {
+	barRef = "Your";
+	bandRef = bookee + "'s";
+}
+if(userType.toLowerCase().equals("band")) {
+	barRef = bookee + "'s";
+	bandRef = "Your";
+}
+
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,7 +55,6 @@ if(username == null) response.sendRedirect("login.jsp");
 <body>
 
 <div class="container mtb">
-	<center><h1>Book a Show</h1></center>
 	<center>
 	<h2>Enter booking details:</h2>
 	<form action="${pageContext.request.contextPath}/operation" method="post">
@@ -49,10 +63,10 @@ if(username == null) response.sendRedirect("login.jsp");
 		<br><br>
 	</center>
 	<div class="col-lg-6">
-		<h2>Your shows:</h2>
+		<h2><%= barRef %> shows:</h2>
 		<jsp:include page="displayUserShows.jsp"></jsp:include>
 	</div>
-		<h2><%= bookingList.get(0).get(6).toString() %>'s gigs:</h2>
+		<h2><%= bandRef %> gigs:</h2>
 	<div class="col-lg-6">
 		<jsp:include page="displayUserBookings.jsp"></jsp:include>
 	</div>
