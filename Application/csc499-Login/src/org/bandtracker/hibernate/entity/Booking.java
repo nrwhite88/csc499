@@ -53,8 +53,8 @@ public class Booking {
 		this.datetimeOfRequest = datetimeOfRequest;
 		this.duration = duration;
 		this.requestedDatetime = requestedDatetime;
-		this.barConfirmed = false;
-		this.bandConfirmed = false;
+		this.barConfirmed = barConfirmed;
+		this.bandConfirmed = barConfirmed;
 	}
 
 	public int getBookingId() {

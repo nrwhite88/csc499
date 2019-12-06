@@ -23,8 +23,6 @@ td
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
-  
-  <title>${param.title}</title>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -89,6 +87,7 @@ Cookie[] cookies = request.getCookies();
 			
 		}
 	}
+if(username == null) response.sendRedirect("login.jsp");
 %>
 
 <body>
@@ -107,12 +106,11 @@ Cookie[] cookies = request.getCookies();
       </div>
       <div class="navbar-collapse collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=${userId}&userype=${userType}">HOME</a></li>
-          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=${userId}&userType=${userType}">HOME</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=<%=userId%>&userType=<%=userType%>">HOME</a></li>
           <li><a href="myCalendar.jsp">CALENDAR</a></li>
-          <li><a href="myBooking.jsp">BOOKING</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=myBooking&userId=<%=userId%>">BOOKING</a></li>
+		  <li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=<%=userId%>">HOST A SHOW</a></li>
           <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
-          <li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=${userId}">HOST A SHOW</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">ETC<b class="caret"></b></a>

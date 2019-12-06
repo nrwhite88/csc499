@@ -20,6 +20,7 @@ import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
 import org.bandtracker.hibernate.dao.UserDAO;
 import org.bandtracker.hibernate.entity.User;
+import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/login")
@@ -83,7 +84,8 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("shows", shows);
 		}
 		else if (user_type.equals("BAND")) {
-			Object bookings = new BookingDAO().listBookingsByBandId(currentUser.get(0).getUserId());
+			List<Object> bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource,
+					Integer.parseInt(user_id));
 			System.out.println("It's " + currentUser);
 			request.setAttribute("bookings", bookings);
 		}

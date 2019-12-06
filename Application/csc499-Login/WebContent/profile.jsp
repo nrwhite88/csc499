@@ -43,7 +43,7 @@ if(username == null) response.sendRedirect("login.jsp");
 		<p><%= user.getBio() %></p>
 		<h4>Contact:</h4>
 		<p>Email: <%= user.getEmail() %><br/>Phone: <%= user.getPhone() %></p>
-		<p>Address:<br/><%= user.getStreetAddress() %><br/><%= user.getTown()%><br/><%= user.getZipCode() %></p>
+		<p>Address:<br/><%= user.getStreetAddress() %><br/><%= user.getTown()%>, <%= user.getState()%> <%= user.getZipCode() %></p>
 	</div>
 
 	<div class="col-lg-8">

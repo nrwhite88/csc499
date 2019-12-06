@@ -38,7 +38,7 @@ if(username == null) response.sendRedirect("login.jsp");
 							"</thead>");
 				
 				List<List<Object>> bookingList = (List)request.getAttribute("bookings");
-				int booker_id = Integer.parseInt(request.getParameter("booker"));
+				int booker_id = Integer.parseInt(userId);
 				int booking_id;
 				for(int i=0; i<bookingList.size(); i++) {
 					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());

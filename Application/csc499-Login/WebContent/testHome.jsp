@@ -135,71 +135,12 @@ List<User> userList = (List)request.getAttribute("userList");
 					"</table>" +
 				"</div>"
 				);
-		
-		out.print("<td><form action='" + request.getContextPath() + "/operation?bar_id=" + public_name
-				+ "' method='get'>");
-		out.print("<input type='submit' value='Add Show'>"
-				+ "<input type='hidden' name='page' value='addShow'>"
-				+ "<input type='hidden' name='bar_id' value='" + booker_id + "'></form>");
 	}
 	
-	else if (user_type.toLowerCase().equals("band")) {
-		out.print(
-					"<strong>Your gig requests:</strong>" +
-						"<hr/>" +
-							"<table>" +
-								"<thead>" +
-									"<th>BOOKING ID</th>" +
-									"<th>START</th>" +
-									"<th>DURATION</th>" +
-									"<th>STATUS</th>" +
-								"</thead>");
-					List<Booking> bookingList = (List)request.getAttribute("bookings");
-					int booking_id;
-					for(int i=0; i<bookingList.size(); i++) {
-						String bar_confirmed = null;
-						String band_confirmed = null;
-						booking_id = bookingList.get(i).getBookingId();
-						String datetime = bookingList.get(i).getRequestedDatetime();
-						int duration = bookingList.get(i).getDuration();
-						Boolean bar_conf = bookingList.get(i).getBarConfirmed();
-						Boolean band_conf = bookingList.get(i).getBandConfirmed();
-						if (bar_conf == null) {
-							bar_confirmed = "Pending";
-						}
-						else if (bar_conf == false) {
-							bar_confirmed = "Denied";
-						}
-						else if (bar_conf == true) {
-							bar_confirmed = "Confirmed";
-						}
-						if (band_conf == null) {
-							band_confirmed = "Pending";
-						}
-						else if (band_conf == false) {
-							band_confirmed = "Denied";
-						}
-						else if (band_conf == true) {
-							band_confirmed = "Confirmed";
-						}
-						out.print("<tr>");
-						out.print("<td>" + booking_id + "</td>");
-						out.print("<td>" + datetime + "</td>");
-						out.print("<td>" + duration + "</td>");
-						out.print("<td>Bar: " + bar_confirmed + "</td>");
-						out.print("<td>Band: " + band_confirmed + "</td>");
-						out.print("<td><form action='" + request.getContextPath() + "/site?"
-								+ "&booking_id=" + booking_id + "' method='get'>"
-								+ "<input type='submit' value='VIEW'>"
-								+ "<input type='hidden' name='page' value='edit'>"
-								+ "<input type='hidden' name='user_id' value='" + booker_id + "'>"
-								+ "<input type='hidden' name='show_id' value='" + booking_id + "'>"
-								+ "</form></td>");
-					}
-		out.print(					
-					"</table>" +
-				"</div>"
-				);
+	else if (user_type.toLowerCase().equals("band")) {%>
+		<jsp:include page="displayUserBookings.jsp"></jsp:include>
+					<%
+		out.print("</div>");
 	}
 
 	if (user_type.toLowerCase().equals("fan")) {

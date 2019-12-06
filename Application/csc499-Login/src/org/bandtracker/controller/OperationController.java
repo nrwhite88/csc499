@@ -70,6 +70,9 @@ public class OperationController extends HttpServlet {
 		case "gohome":
 			homeLoader(request, response);
 			break;
+		case "mybooking":
+			myBookingLoader(request, response);
+			break;
 		default:
 			errorPage(request, response);
 		}
@@ -102,15 +105,21 @@ public class OperationController extends HttpServlet {
 					request.getParameter("datetime").toString());
 			bookOperation(request, response, dataSource, newBooking);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
+			break;
 		case "addshowoperation":
 			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString(),
 					request.getParameter("show_name"), request.getParameter("show_description"));
 			addShowOperation(request, response, dataSource, newShow);
 			homeLoader(request, response);
+			break;
 		case "searchoperation":
 			searchOperation(request, response);
+			break;
 		case "editshowoperation":
 			editShowOperation(request, response);
+			break;
+		case "editbookingoperation":
+			editBookingOperation(request, response);
 		default:
 			break;
 		}
@@ -226,10 +235,14 @@ public class OperationController extends HttpServlet {
 		request.setAttribute("title", "Show");
 		request.setAttribute("edit", false);
 		
-		Object bookings = new BookingDAO().listBookingsByShowId(Integer.parseInt(request.getParameter("show_id").toString()));
+		int show_id = Integer.parseInt(request.getParameter("show_id").toString());
+		
+		List<Object> bookings = new BookingModel().listBookingsWithEverythingByShowId(dataSource, show_id);
+
 		request.setAttribute("bookings", bookings);
-		Object show = new ShowDAO().getShowById(Integer.parseInt(request.getParameter("show_id").toString()));
+		Object show = new ShowDAO().getShowById(show_id);
 		request.setAttribute("show", show);
+		request.setAttribute("bookings", bookings);
 		
 		request.getRequestDispatcher("show.jsp").forward(request, response);
 	}
@@ -238,10 +251,12 @@ public class OperationController extends HttpServlet {
 		request.setAttribute("title", "Show");
 		request.setAttribute("edit", true);
 		
-		Object bookings = new BookingDAO().listBookingsByShowId(Integer.parseInt(request.getParameter("show_id").toString()));
-		request.setAttribute("bookings", bookings);
-		Object show = new ShowDAO().getShowById(Integer.parseInt(request.getParameter("show_id").toString()));
+		int show_id = Integer.parseInt(request.getParameter("show_id").toString());
+		
+		List<Object> bookings = new BookingModel().listBookingsWithEverythingByShowId(dataSource, show_id);
+		Object show = new ShowDAO().getShowById(show_id);
 		request.setAttribute("show", show);
+		request.setAttribute("bookings", bookings);
 		
 		request.getRequestDispatcher("show.jsp").forward(request, response);
 
@@ -256,6 +271,13 @@ public class OperationController extends HttpServlet {
 		homeLoader(request, response);
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
 
+	}
+	
+	public void myBookingLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("userId").toString());
+		List<Object> bookings = new BookingModel().listMyBookingsByBarId(dataSource, userId);
+		request.setAttribute("bookings", bookings);
+		request.getRequestDispatcher("myBooking.jsp").forward(request, response);
 	}
 	
 	public void editShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -345,6 +367,11 @@ public class OperationController extends HttpServlet {
 			Object bookings = new BookingDAO().listBookingsByBandId(userId);
 			System.out.println("It's " + user);
 			request.setAttribute("bookings", bookings);
+		}
+		if(user_type.equals("FAN")) {
+			Object shows = new ShowDAO().listShows();
+			System.out.println("It's " + user);
+			request.setAttribute("shows", shows);
 		}
 		
 		request.getRequestDispatcher("testHome.jsp").forward(request, response);
