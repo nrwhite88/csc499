@@ -156,4 +156,28 @@ public class BookingDAO {
 		System.out.println("Edit successful.");	
 	}
 	
+	public void editBookingResponse(int bookingId, String userType, Boolean bookingResponse) {
+		factory = getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		System.out.println("Booking id: " + bookingId);
+		System.out.println("User type: " + userType);
+		System.out.println("Booking response: " + bookingResponse);
+		
+		Booking booking = (Booking) session.get(Booking.class, bookingId);
+		
+		if (userType.toLowerCase().equals("band")) {
+			booking.setBandConfirmed(bookingResponse);
+		}
+		else if (userType.toLowerCase().equals("bar")) {
+			booking.setBarConfirmed(bookingResponse);
+		}
+		
+		Booking mergedBooking = (Booking) session.merge(booking);
+		session.getTransaction().commit();
+		
+		System.out.println("Edit successful.");	
+	}
+	
 }

@@ -108,7 +108,7 @@ if(username == null) response.sendRedirect("login.jsp");
         <ul class="nav navbar-nav">
           <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=<%=userId%>&userType=<%=userType%>">HOME</a></li>
           <li><a href="myCalendar.jsp">CALENDAR</a></li>
-          <li><a href="<%= request.getContextPath()%>/operation?page=myBooking&userId=<%=userId%>">BOOKING</a></li>
+          <li><a href="<%= request.getContextPath()%>/operation?page=myBooking&userId=<%=userId%>&userType=<%=userType%>">BOOKING</a></li>
 		  <li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=<%=userId%>">HOST A SHOW</a></li>
           <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
           <li><a href="search.jsp">SEARCH</a></li>

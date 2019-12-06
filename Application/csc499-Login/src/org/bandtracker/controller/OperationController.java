@@ -121,6 +121,8 @@ public class OperationController extends HttpServlet {
 		case "editbookingoperation":
 			editBookingOperation(request, response);
 		default:
+		case "bookingresponseoperation":
+			bookingResponseOperation(request, response);
 			break;
 		}
 	}
@@ -269,15 +271,30 @@ public class OperationController extends HttpServlet {
 		new BookingDAO().editBookingDetails(Integer.parseInt(bookingId), requestedDatetime,
 				Integer.parseInt(duration));
 		homeLoader(request, response);
-		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
-
 	}
 	
 	public void myBookingLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userId = Integer.parseInt(request.getParameter("userId").toString());
-		List<Object> bookings = new BookingModel().listMyBookingsByBarId(dataSource, userId);
+		String userType = request.getParameter("userType");
+		List<Object> bookings = null;
+		
+		if (userType.toLowerCase().equals("bar")) {
+			bookings = new BookingModel().listMyBookingsByBarId(dataSource, userId);	
+		}
+		else if (userType.toLowerCase().equals("band")) {
+			bookings = new BookingModel().listMyBookingsByBandId(dataSource, userId);	
+		}
+
 		request.setAttribute("bookings", bookings);
 		request.getRequestDispatcher("myBooking.jsp").forward(request, response);
+	}
+	
+	public void bookingResponseOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int bookingId = Integer.parseInt(request.getParameter("booking_id").toString());
+		String userType = request.getParameter("userType").toString();
+		Boolean bookingResponse = Boolean.parseBoolean(request.getParameter("booking_response").toString());
+		new BookingDAO().editBookingResponse(bookingId, userType, bookingResponse);
+		myBookingLoader(request, response);
 	}
 	
 	public void editShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

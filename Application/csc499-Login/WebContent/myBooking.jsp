@@ -31,6 +31,7 @@ if(username == null) response.sendRedirect("login.jsp");
 %> 
 <div class="container mtb">
 <%
+if (userType.toLowerCase().equals("bar")) {
 	out.print(
 				"<strong>Bookings:</strong>" +
 					"<hr/>" +
@@ -76,18 +77,22 @@ if(username == null) response.sendRedirect("login.jsp");
 					out.print("<td>" + bookingList.get(i).get(2).toString() + " hrs</td>");
 					out.print("<td>Bar: " + bar_confirmed + "</td>");
 					out.print("<td>Band: " + band_confirmed + " </td>");
-					out.print("<td><form action='" + request.getContextPath() + "/operation?"
-							+ "&booking_id=" + booking_id + "' method='post'>"
+					out.print("<td><form action='" + request.getContextPath() + "/operation' "
+							+ "method='post'>"
 							+ "<input type='hidden' name='form' value='bookingResponseOperation'>"
-							+ "<input type='hidden' name='user_id' value='" + userId+ "'>"
-							+ "<input type='hidden' name='response' value='1'>"
+							+ "<input type='hidden' name='userId' value='" + userId + "'>"
+							+ "<input type='hidden' name='booking_id' value='" + booking_id+ "'>"
+							+ "<input type='hidden' name='userType' value='" + userType+ "'>"
+							+ "<input type='hidden' name='booking_response' value='true'>"
 							+ "<input type='submit' value='CONFIRM'>"
 							+ "</form></td>");
-					out.print("<td><form action='" + request.getContextPath() + "/operation?"
-							+ "&booking_id=" + booking_id + "' method='post'>"
+					out.print("<td><form action='" + request.getContextPath() + "/operation' "
+							+ "method='post'>"
 							+ "<input type='hidden' name='form' value='bookingResponseOperation'>"
-							+ "<input type='hidden' name='user_id' value='" + userId+ "'>"
-							+ "<input type='hidden' name='response' value='0'>"
+							+ "<input type='hidden' name='userId' value='" + userId + "'>"
+							+ "<input type='hidden' name='booking_id' value='" + booking_id + "'>"
+							+ "<input type='hidden' name='userType' value='" + userType+ "'>"
+							+ "<input type='hidden' name='booking_response' value='false'>"
 							+ "<input type='submit' value='DENY'>"
 							+ "</form></td>");
 				}
@@ -95,6 +100,77 @@ if(username == null) response.sendRedirect("login.jsp");
 	out.print(					
 				"</table>"
 			);
+}
+else if (userType.toLowerCase().equals("band")) {
+	out.print(
+				"<strong>Bookings:</strong>" +
+					"<hr/>" +
+						"<table>" +
+							"<thead>" +
+								"<th>BAR</th>" +
+								"<th>SHOW</th>" +
+								"<th>START</th>" +
+								"<th>LENGTH</th>" +
+								"<th>STATUS</th>" +
+							"</thead>");
+				
+				List<List<Object>> bookingList = (List)request.getAttribute("bookings");
+				int booker_id = Integer.parseInt(userId);
+				int booking_id;
+				for(int i=0; i<bookingList.size(); i++) {
+					Boolean bar_conf = Boolean.parseBoolean(bookingList.get(i).get(4).toString());
+					Boolean band_conf = Boolean.parseBoolean(bookingList.get(i).get(5).toString());
+					String bar_confirmed = null, band_confirmed = null;
+					if (bar_conf == null) {
+						bar_confirmed = "Pending";
+					}
+					else if (bar_conf == false) {
+						bar_confirmed = "Denied";
+					}
+					else if (bar_conf == true) {
+						bar_confirmed = "Confirmed";
+					}
+					if (band_conf == null) {
+						band_confirmed = "Pending";
+					}
+					else if (band_conf == false) {
+						band_confirmed = "Denied";
+					}
+					else if (band_conf == true) {
+						band_confirmed = "Confirmed";
+					}
+					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());
+					out.print("<tr>");
+					out.print("<td>" + bookingList.get(i).get(11).toString() + "</td>");
+					out.print("<td>" + bookingList.get(i).get(8).toString() + "</td>");
+					out.print("<td>" + bookingList.get(i).get(1).toString() + "</td>");
+					out.print("<td>" + bookingList.get(i).get(2).toString() + " hrs</td>");
+					out.print("<td>Bar: " + bar_confirmed + "</td>");
+					out.print("<td>Band: " + band_confirmed + " </td>");
+					out.print("<td><form action='" + request.getContextPath() + "/operation' "
+							+ "method='post'>"
+							+ "<input type='hidden' name='form' value='bookingResponseOperation'>"
+							+ "<input type='hidden' name='userId' value='" + userId + "'>"
+							+ "<input type='hidden' name='booking_id' value='" + booking_id+ "'>"
+							+ "<input type='hidden' name='userType' value='" + userType+ "'>"
+							+ "<input type='hidden' name='booking_response' value='true'>"
+							+ "<input type='submit' value='CONFIRM'>"
+							+ "</form></td>");
+					out.print("<td><form action='" + request.getContextPath() + "/operation' "
+							+ "method='post'>"
+							+ "<input type='hidden' name='form' value='bookingResponseOperation'>"
+							+ "<input type='hidden' name='userId' value='" + userId + "'>"
+							+ "<input type='hidden' name='booking_id' value='" + booking_id + "'>"
+							+ "<input type='hidden' name='userType' value='" + userType+ "'>"
+							+ "<input type='hidden' name='booking_response' value='false'>"
+							+ "<input type='submit' value='DENY'>"
+							+ "</form></td>");
+				}
+				
+	out.print(					
+				"</table>"
+			);
+}
 %>
 </div>
 
