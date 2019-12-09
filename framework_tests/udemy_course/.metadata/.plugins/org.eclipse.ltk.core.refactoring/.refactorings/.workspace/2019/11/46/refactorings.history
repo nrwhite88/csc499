@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 8 resources" deleteContents="false" description="Delete 8 resources" element1="/S30L03 - Setting Up Hibernate Configuration File" element2="/S30L05 - Adding Entity Class" element3="/S30L06 - Adding Entity Class  (Part 2)" element4="/S30L07 - Hibernate in Action (Part 1)" element5="/S30L08 - Hibernate in Action (Part 2)" element6="/S30L09 - Retriving Record from Database" element7="/S30L10 - Updating a Record in Database" element8="/S30L11 - CRUD - Deleting Record from Database" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="8" stamp="1573839182355"/>
+</session>
