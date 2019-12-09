@@ -21,10 +21,13 @@
 	Last name:	<input type="text" name="lastname"/><br/>
 	Public name:<input type="text" name="publicname" required="required"/><font color="red">*</font><br/>
 	Address:	<input type="text" name="streetaddress"/><br/>
-	Town:		<input type="text" name="town"/><br/>
+	Town:		<input type="text" name="town"/><font color="red">*</font><br/>
+	State:		<input type="text" name="state"/><font color="red">*</font><br/>
 	Zip code:	<input type="text" name="zipcode" required="required"/><font color="red">*</font><br/>
 	Email:		<input type="text" name="email" required="required"/><font color="red">*</font><br/>
 	Phone:		<input type="text" name="phone" required="required"/><font color="red">*</font><br/>
+	Website:	<input type="text" name="website"/><br/><br/>
+	Bio: 		<br/><textarea rows="4" cols="50" name="bio" maxlength="500"/></textarea><br/>
 <br/>
 <font color="red">* = Required field</font><br/><br/>
 <input type="hidden" name="form" value="registerOperation">

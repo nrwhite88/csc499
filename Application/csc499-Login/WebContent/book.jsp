@@ -39,7 +39,7 @@ if(userType.toLowerCase().equals("bar")) {
 	barRef = "Your";
 	bandRef = bookee + "'s";
 }
-if(userType.toLowerCase().equals("band")) {
+else if(userType.toLowerCase().equals("band")) {
 	barRef = bookee + "'s";
 	bandRef = "Your";
 }

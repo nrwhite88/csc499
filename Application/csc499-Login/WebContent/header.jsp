@@ -17,6 +17,11 @@ td
 {
     padding:0 15px 0 15px;
 }
+tr.bordered {
+    border-top: 1px solid #384452;
+    padding: 50px;
+    border-spacing: 5em;
+}
 </style>
   <meta charset="utf-8">
   <title>BandTracker</title>
@@ -106,12 +111,19 @@ if(username == null) response.sendRedirect("login.jsp");
       </div>
       <div class="navbar-collapse collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=<%=userId%>&userType=<%=userType%>">HOME</a></li>
-          <li><a href="myCalendar.jsp">CALENDAR</a></li>
-          <li><a href="<%= request.getContextPath()%>/operation?page=myBooking&userId=<%=userId%>&userType=<%=userType%>">BOOKING</a></li>
-		  <li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=<%=userId%>">HOST A SHOW</a></li>
+          <% if (userId != null) {
+        	  %><li><a href="<%= request.getContextPath()%>/operation?page=goHome&userId=<%=userId%>&userType=<%=userType%>">HOME</a></li>
+          <%}%>
+          <% if (userId != null && ! userType.toLowerCase().equals("fan")) {
+        	  %><li><a href="<%= request.getContextPath()%>/operation?page=myBooking&userId=<%=userId%>&userType=<%=userType%>">BOOKING</a></li>
+          <%}%>
+          <% if (userId != null && userType.toLowerCase().equals("bar")) { 
+        	  %><li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=<%=userId%>">HOST A SHOW</a></li>
+          <%}%>
           <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
+          <% if (userId != null) { 
+        	  %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">ETC<b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -123,6 +135,7 @@ if(username == null) response.sendRedirect("login.jsp");
               <li><a href="<%= request.getContextPath()%>/site?action=destroy">LOGOUT</a></li>
             </ul>
           </li>
+          <%}%>
         </ul>
       </div>
       <!--/.nav-collapse -->

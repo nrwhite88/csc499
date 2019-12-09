@@ -1,29 +1,27 @@
   <div id="footerwrap">
     <div class="container">
         <div class="col-lg-4">
-          <h4>It's a Box Social!</h4>
-          <div class="hline-w"></div>
-          <p>Hor noer juer opse theow kort a of thw
-          <br/>a. Hrt yuo I ert juwe rndlo lavtj on o
-          <br/><br/>Hulo hert l:edo glio an der lerth amn.
-          <br/><br/>T re ghel jerb nrad gider nasc ker tu a
-          <br/>der ghr llox obdiyu morhyt jowr apsgh.
-          <br/>kse thwe laerto bns der tho pwer mns.
-          </p>
-        </div>
-        <div class="col-lg-4">
-          <h4>Nick, the Creator</h4>
+          <h4>About this project</h4>
           <div class="hline-w"></div>
           <p>
-          Hey it's me, Nick. Just wanted to let you know,<br/>
-          Thanks for stopping by!
+			This idea was inspired by my friendship with musicians, music itself, and the owners of bars who make this kind of stuff
+			possible. During my barbacking days, I witnessed the chaos that is the booking process. I figured, hey, let's try and make
+			this a little easier on everyone! And, well, here we are.
+			</p>
+        </div>
+        <div class="col-lg-4">
+          <h4>Nick, the creator</h4>
+          <div class="hline-w"></div>
+          <p>
+            I'm a senior about to graduate from SCSU. After this I hope to find a long and prosperous career in enterprise software
+            development. Unless this idea makes me famous first, which it will.
           </p>
           </div>
           <div class="col-lg-4">
           <h4>Created for CSC499</h4>
           <div class="hline-w"></div>
           <p>
-            501 Crescent St.<br/>New Haven, CT<br/> United States<br/>
+            Maybe an exaggeration, but this might be the best capstone project in the history of mankind. Hope you enjoyed it!
           </p>
         </div>
 

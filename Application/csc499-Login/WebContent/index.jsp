@@ -11,7 +11,7 @@
 <h3>
 	<a href="${pageContext.request.contextPath}/operation?page=register">Register</a><br><br>
 	<a href="${pageContext.request.contextPath}/operation?page=login">Log In</a><br><br>
-	<a href="${pageContext.request.contextPath}/test?action=listUsers">Test Page</a><br><br>
+	<!-- <a href="${pageContext.request.contextPath}/test?action=listUsers">Test Page</a><br><br> -->
 </h3>
 </center>
 

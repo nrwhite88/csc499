@@ -71,7 +71,8 @@ public class User {
 	
 
 	public User(String username, String password, String userType, String publicName, String firstName, String lastName,
-			String streetAddress, String town, String zipCode, String email, int phone) {
+			String streetAddress, String town, String zipCode, String email, int phone, String state,
+			String websiteURL, String bio) {
 		this.username = username;
 		this.password = password;
 		this.userType = userType;
@@ -83,6 +84,9 @@ public class User {
 		this.zipCode = zipCode;
 		this.email = email;
 		this.phone = phone;
+		this.state = state;
+		this.websiteURL = websiteURL;
+		this.bio = bio;
 	}
 
 	public User(int userId, String username, String userType, Boolean isAdmin, String publicName, String firstName,

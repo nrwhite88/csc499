@@ -48,24 +48,22 @@ Show show = (Show)request.getAttribute("show");
 			<hr/>
 			<table>
 				<thead>
-					<th>ID</th>
-					<th>Name</th>
+					<th>Show</th>
 					<th>Start</th>
 					<th>End</th>
 					<th>Description</th>
 				</thead>
 					<% 
+					int showId = 0;
 					if(! edit) {
-						out.print("<td>" + show.getShowId() + "</td>");
 						out.print("<td>" + show.getShowName() + "</td>");
 						out.print("<td>" + show.getStartDatetime() + "</td>");
 						out.print("<td>" + show.getEndDatetime() + "</td>");
 						out.print("<td>" + show.getShowDescription() + "</td>");
 					}
 					else {
-							int showId = show.getShowId();
+							showId = show.getShowId();
 							out.print("<tr>");
-							out.print("<td>" + showId + "</td>");
 							out.print("<form action='" + request.getContextPath() + "/operation' method='post'>"
 									+ "<td><input type='text' name='name' value='" + show.getShowName() + "'></td>"
 									+ "<td><input type='text' name='start' value='" + show.getStartDatetime() + "'></td>"
@@ -74,6 +72,7 @@ Show show = (Show)request.getAttribute("show");
 									+ "<input type='hidden' name='userId' value='" + userId + "'>"
 									+ "<input type='hidden' name='userType' value='" + userType + "'>"
 									+ "<input type='hidden' name='showId' value='" + showId + "'>"
+									+ "<input type='hidden' name='show_id' value='" + showId + "'>"
 									+ "<input type='hidden' name='form' value='editShowOperation'>"
 									+ "<td><input type='submit' value='Submit'></td></form>"
 									);
@@ -101,7 +100,9 @@ Show show = (Show)request.getAttribute("show");
 					<th>Date & Time of Request</th>
 					<th>Start</th>
 					<th>Duration</th>
-					<th>Status</th>
+					<% if (! userType.toLowerCase().equals("fan")) {
+						out.print("<th>Status</th>");
+					}%>
 					</thead>
 					<%
 					if(! edit) {
@@ -109,7 +110,7 @@ Show show = (Show)request.getAttribute("show");
 						Boolean bar_conf = Boolean.parseBoolean(bookingList.get(i).get(4).toString());
 						Boolean band_conf = Boolean.parseBoolean(bookingList.get(i).get(5).toString());
 						String bar_confirmed = null, band_confirmed = null;
-						if (bar_conf == null) {
+						if (bar_conf.equals(null)) {
 							bar_confirmed = "Pending";
 						}
 						else if (bar_conf == false) {
@@ -118,7 +119,7 @@ Show show = (Show)request.getAttribute("show");
 						else if (bar_conf == true) {
 							bar_confirmed = "Confirmed";
 						}
-						if (band_conf == null) {
+						if (band_conf.equals(null)) {
 							band_confirmed = "Pending";
 						}
 						else if (band_conf == false) {
@@ -132,9 +133,11 @@ Show show = (Show)request.getAttribute("show");
 						out.print("<td>" + bookingList.get(i).get(3).toString() + "</td>");
 						out.print("<td>" + bookingList.get(i).get(1).toString() + "</td>");
 						out.print("<td> " + bookingList.get(i).get(2).toString() + "</td>");
-						out.print("<td>Bar: " + bar_confirmed + "</td>");
-						out.print("<td>Band: " + band_confirmed + "</td>");
-						out.print("</tr>");
+						if (! userType.toLowerCase().equals("fan")) {
+							out.print("<td>Bar: " + bar_confirmed + "</td>");
+							out.print("<td>Band: " + band_confirmed + "</td>");
+							out.print("</tr>");	
+						}
 						}
 					}
 					else{
@@ -162,7 +165,7 @@ Show show = (Show)request.getAttribute("show");
 							}
 							int bookingId = Integer.parseInt(bookingList.get(i).get(0).toString());
 							out.print("<tr>");
-							out.print("<td>" + bookingId + "</td>");
+							out.print("<td>" + bookingList.get(i).get(6).toString() + "</td>");
 							out.print("<td>" + bookingList.get(i).get(3).toString() + "</td>");
 							out.print("<form action='" + request.getContextPath() + "/operation' method='post'>"
 									+ "<td><input type='text' name='requestedDatetime' value='" + bookingList.get(i).get(1).toString() + "'></td>"
@@ -172,6 +175,7 @@ Show show = (Show)request.getAttribute("show");
 									+ "<td>Bar: " + bar_confirmed + "</td>"
 									+ "<td>Band: " + band_confirmed + "</td>"
 									+ "<input type='hidden' name='userId' value='" + userId + "'>"
+									+ "<input type='hidden' name='show_id' value='" + showId + "'>"
 									+ "<input type='hidden' name='userType' value='" + userType + "'>"
 									+ "<input type='hidden' name='bookingId' value='" + bookingId + "'>"
 									+ "<input type='hidden' name='form' value='editBookingOperation'>"

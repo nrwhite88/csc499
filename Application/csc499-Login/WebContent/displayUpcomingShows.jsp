@@ -48,7 +48,7 @@ if(username == null) response.sendRedirect("login.jsp");
 					int show_id;
 					for(int i=0; i<showList.size(); i++) {
 						show_id = Integer.parseInt(showList.get(i).get(3).toString());
-						out.print("<tr>");
+						out.print("<tr class='bordered'>");
 						out.print("<td>" + showList.get(i).get(6).toString() + "</td>");
 						out.print("<td>" + showList.get(i).get(0).toString() + "</td>");
 						out.print("<td>" + showList.get(i).get(1).toString() + "</td>");

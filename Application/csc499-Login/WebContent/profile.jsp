@@ -38,6 +38,20 @@ if(username == null) response.sendRedirect("login.jsp");
 <div class="container mb">
 	<h1><center><%= user.getPublicName() %></center></h1></br>
 	<h3><center>A <%= user.getUserType() %> from <%= user.getTown() %></center></h3><br/></br>
+	<center>
+	<%
+		if (!userType.equals("FAN")) {
+			int booker = Integer.parseInt(request.getParameter("booker").toString());
+			int bookee = Integer.parseInt(request.getParameter("bookee").toString());
+			out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + request.getParameter("booker")
+					+ "&bookee_id=" + request.getParameter("bookee") + "' method='get'>"
+					+ "<input type='submit' value='BOOK'>" + "<input type='hidden' name='page' value='book'>"
+					+ "<input type='hidden' name='booker' value='" + booker + "'>"
+					+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
+					+ "<input type='hidden' name='user_type' value='" + userType + "'>" + "</form></td>");
+		}
+	%>
+	</center>
 	<div class="col-lg-4">
 		<h4>Bio:</h4>
 		<p><%= user.getBio() %></p>
@@ -53,8 +67,6 @@ if(username == null) response.sendRedirect("login.jsp");
 	else if (request.getAttribute("user_type").toString().toLowerCase().equals("band")){
 		%> <jsp:include page="displayUserBookings.jsp"></jsp:include>
 	<%}%>
-	 
-		
 	</div>
 </div>
 <br>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ public class SiteController extends HttpServlet {
 			goHome(request, response);
 			break;
 		case "destroy":
-			request.getSession().invalidate();	
+			destroySession(request, response);
 			response.sendRedirect(request.getContextPath()+"/operation?page=login");
 			break;
 		default:
@@ -53,6 +54,20 @@ public class SiteController extends HttpServlet {
 	public void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Homepage");
 		request.getRequestDispatcher("home.jsp").forward(request, response);
+	}
+	
+	public void destroySession(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.getSession().invalidate();
+		
+		response.setContentType("text/html");
+		Cookie[] cookies = request.getCookies();
+		if(cookies !=null){
+			for(Cookie cookie : cookies){
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+		}
 	}
 
 }

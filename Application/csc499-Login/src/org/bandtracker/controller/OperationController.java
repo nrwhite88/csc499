@@ -26,6 +26,10 @@ import org.bandtracker.hibernate.entity.User;
 import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 @WebServlet("/operation")
 public class OperationController extends HttpServlet {
@@ -85,13 +89,17 @@ public class OperationController extends HttpServlet {
 		operation = operation.toLowerCase();
 		switch (operation) {
 		case "registeroperation":
+			System.out.println("BIO: " + request.getParameter("bio"));
 			User newUser = new User(request.getParameter("username"), request.getParameter("password"),
 					request.getParameter("usertype"),
 					request.getParameter("publicname"), request.getParameter("firstname"),
 					request.getParameter("lastname"), request.getParameter("streetaddress"),
 					request.getParameter("town"), request.getParameter("zipcode"),
-					request.getParameter("email"), Integer.parseInt(request.getParameter("phone")));
+					request.getParameter("email"), Integer.parseInt(request.getParameter("phone")),
+							request.getParameter("state"), request.getParameter("website"),
+							request.getParameter("bio"));
 			registerOperation(newUser);
+			System.out.println("BIO: " + request.getParameter("bio"));
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			break;
 		case "loginoperation":
@@ -171,10 +179,19 @@ public class OperationController extends HttpServlet {
 	public void bookOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
 			Booking newBooking) throws ServletException, IOException {
 		
+		String bandId = null;
+		String userType = request.getParameter("userType");
 		DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String datetimeOfRequest = LocalDateTime.parse(newBooking.getDatetimeOfRequest()).format(dtFormat);
 		newBooking.setDatetimeOfRequest(datetimeOfRequest);
-		String bandId = request.getParameter("bookee_id").toString();
+		if (userType.toLowerCase().equals("bar")) {
+			bandId = request.getParameter("bookee_id").toString();
+			newBooking.setBarConfirmed(true);
+		}
+		else if (userType.toLowerCase().equals("band")) {
+			bandId = request.getParameter("booker_id").toString();
+			newBooking.setBandConfirmed(true);
+		}
 		String showId = request.getParameter("show_id").toString();
 		new BookingDAO().addBookingDetails(newBooking, Integer.parseInt(bandId), Integer.parseInt(showId));
 		homeLoader(request, response);
@@ -254,7 +271,7 @@ public class OperationController extends HttpServlet {
 		request.setAttribute("edit", true);
 		
 		int show_id = Integer.parseInt(request.getParameter("show_id").toString());
-		
+
 		List<Object> bookings = new BookingModel().listBookingsWithEverythingByShowId(dataSource, show_id);
 		Object show = new ShowDAO().getShowById(show_id);
 		request.setAttribute("show", show);
@@ -305,7 +322,7 @@ public class OperationController extends HttpServlet {
 		String description = request.getParameter("description").toString();
 		new ShowDAO().editShowDetails(Integer.parseInt(showId), start, end, name, description);
 		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
-		homeLoader(request, response);
+		editShowLoader(request, response);
 	}
 	
 	public void deleteShowOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -381,7 +398,7 @@ public class OperationController extends HttpServlet {
 			request.setAttribute("shows", shows);
 		}
 		else if (user_type.equals("BAND")) {
-			Object bookings = new BookingDAO().listBookingsByBandId(userId);
+			List<Object> bookings = new BookingModel().listBookingsWithEverythingByBandId(dataSource, userId);
 			System.out.println("It's " + user);
 			request.setAttribute("bookings", bookings);
 		}

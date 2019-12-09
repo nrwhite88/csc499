@@ -42,7 +42,7 @@ if(username == null) response.sendRedirect("login.jsp");
 				int booking_id;
 				for(int i=0; i<bookingList.size(); i++) {
 					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());
-					out.print("<tr>");
+					out.print("<tr class='bordered'>");
 					out.print("<td>" + bookingList.get(i).get(10).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(8).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(12).toString() + ", " +

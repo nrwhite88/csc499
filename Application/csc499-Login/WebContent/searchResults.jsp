@@ -33,8 +33,6 @@ String myId = userId;
 %>
 
 <div class="container mb">
-	<div class="row">
-		<div class="col-lg-6">
 			<h3>Here are some results:</h3>
 			<hr/>
 			<table>
@@ -47,7 +45,7 @@ String myId = userId;
 					</thead>
 					<%
 					for(User user : results) {
-						out.print("<tr>");
+						out.print("<tr class='bordered'>");
 						out.print("<td>" + user.getPublicName() + "</td>");
 						out.print("<td>" + user.getUserType() + "</td>");
 						out.print("<td>" + user.getTown() + "</td>");
@@ -64,8 +62,6 @@ String myId = userId;
 						}
 					%>
 			</table>
-		</div>
-	</div>
 </div>
 
 <br>

@@ -141,7 +141,7 @@ else if (userType.toLowerCase().equals("band")) {
 					}
 					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());
 					out.print("<tr>");
-					out.print("<td>" + bookingList.get(i).get(11).toString() + "</td>");
+					out.print("<td>" + bookingList.get(i).get(10).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(8).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(1).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(2).toString() + " hrs</td>");

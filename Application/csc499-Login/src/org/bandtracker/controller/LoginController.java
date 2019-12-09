@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
 			loginCookie.setMaxAge(15*60);
 			response.addCookie(loginCookie);
 			request.getRequestDispatcher("testHome.jsp").forward(request, response);
+			request.getRequestDispatcher("testHome.jsp").forward(request, response);
 			
 		}else{
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");

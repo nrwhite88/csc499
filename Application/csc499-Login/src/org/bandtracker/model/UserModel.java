@@ -32,12 +32,16 @@ public class UserModel {
 			String town = newUser.getTown();
 			String zip_code = newUser.getZipCode();
 			String email = newUser.getEmail();
-			String phone = Integer.toString(newUser.getPhone());
+			int phone = newUser.getPhone();
+			String state = newUser.getState();
+			String website = newUser.getWebsiteURL();
+			String bio = newUser.getBio();
 			
 			String query = "insert into users (username, password,"
 					+ "user_type, public_name, first_name, last_name,"
-					+ "street_address, town, zip_code, email, phone)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?)";
+					+ "street_address, town, zip_code, email, phone, "
+					+ "state, website_URL, bio)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			System.out.println(query);
 			statement = connect.prepareStatement(query);
 			
@@ -51,7 +55,10 @@ public class UserModel {
 			statement.setString(8, town);
 			statement.setString(9, zip_code);
 			statement.setString(10, email);
-			statement.setString(11, phone);
+			statement.setInt(11, phone);
+			statement.setString(12, state);
+			statement.setString(13, website);
+			statement.setString(14, bio);
 			
 			System.out.println(statement);
 			
