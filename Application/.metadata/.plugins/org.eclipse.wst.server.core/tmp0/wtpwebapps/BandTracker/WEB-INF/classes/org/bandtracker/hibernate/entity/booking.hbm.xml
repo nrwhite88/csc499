@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="org.bandtracker.hibernate.entity">
+	<class name="Bookings" table="Bookings" >
+		<id name="bookingId" type="Integer">
+			<column name="booking_ID" />
+			<generator class="select" />
+		</id>
+		<property name="requestedDatetime" type="string">
+			<column name="requested_datetime" not-null="true" unique="true"/>
+		</property>
+		<property name="duration" type="string">
+			<column name="duration_hrs" not-null="true" unique="true"/>
+		</property>
+		<property name="confirmed" type="boolean">
+			<column name="confirmed" not-null="true" unique="true"/>
+		</property>
+		<property name="datetimeOfRequest" type="string">
+			<column name="datetime_of_request" not-null="true" unique="true"/>
+		</property>
+		
+		<many-to-one name="user" class="com.jcombat.entity.User" fetch="select">
+            <column name="user_ID" not-null="true" />
+        </many-to-one>
+		
+	</class>
+	
+</hibernate-mapping>

@@ -1,0 +1,141 @@
+INDEX VERSION 1.131
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1026248190.index
+/S16L04 - Making use of include directive/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3381664120.index
+/S01L07 - JSP expressions/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3220282760.index
+/S07L04 - JSTL even more functions/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1984955157.index
+/S01L11 - Directive/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4162250776.index
+/S17L02 - Organize application/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1232090074.index
+/S7L1 JSTL Functions and Tags/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/885347012.index
+/S06L01 - Good to know information/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2333491373.index
+/S17L03 - Almost done/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/615640264.index
+/S17L04 - Finalize the feature/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3031043362.index
+/S1L12 Annotations/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2036140505.index
+/BandTracker-Booted/src/main/java
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2735139176.index
+/S03L01 - Beans overview/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3108612685.index
+/S01L13 - JSP configuration in deployment descriptor/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3635389600.index
+/S01L20 - Basic application based on MVC/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2268416423.index
+/S13L02 - Integrate template with project/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2929285402.index
+/S07L02 - JSTL trim and escapeXml function/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4009975020.index
+/S01L05 - Hello JSP/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3439651941.index
+/S07L01 - JSTL length function/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1805954533.index
+/S04L05 - User logout (using session attribute)/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3180852380.index
+/S13L03 - Integrate template with project using JSTL/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3614750403.index
+/S03L02 - Bean scope types/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3618040187.index
+/JSTL-Setup/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3044390931.index
+/csc499-Login/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3461348167.index
+/S17L03 - Almost done/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/417324199.index
+/JSTL-Setup/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2590975122.index
+/S17L02 - Organize application/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2519281912.index
+/S04L08 - Handling session without cookie/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1820932156.index
+/BandTracker-Booted/src/main/java
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/946482150.index
+/Hello JSP/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/680495409.index
+/S04L06 - Organising the application/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4162717479.index
+/S7L1 JSTL Functions & Tags/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/412870662.index
+/S01L09 - JSP declarations/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1767937383.index
+/S02L04 - Forms under servlet/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2011035522.index
+/S03L04 - Beans with web forms/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/681330390.index
+/S02L03 - Forms under JSP/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2939558395.index
+/S07L03 - JSTL more functions/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3374796551.index
+/S04L07 - Fixing Redirect and forward links/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4020430468.index
+/S01L14 - Reading URL parameter(s)/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/539084179.index
+/S17L04 - Finalize the feature/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/248850478.index
+/S16L1 Listing Data on Page/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3898109513.index
+/S13L03 - Integrate template with project using JSTL/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4189714678.index
+/S04L03 - Read and write operation of cookie/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3634074440.index
+/S23L11 - Add delete image action/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1728975556.index
+/S01L08 - JSP scriptlets/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3007340611.index
+/S1L14 Reading URL Parameters/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/758902795.index
+/S13L2 Templates/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1417207256.index
+/S03L03 - Request scope/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1465655964.index
+/S04L09 - Servlet Filters/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1887844353.index
+/S01L10 - JSP comment/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2484143695.index
+/S4L1 Session Overview/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/531278929.index
+/S02L05 -  Basic form validations/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1352361251.index
+/S7L1 JSTL Functions and Tags/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1171793924.index
+/S16L1 Listing Data on Page/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3379676245.index
+/S01L16 - Import class into Jsp page/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3921038875.index
+/S16L01 - Setting up/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1355284263.index
+/S04L04 - User logout (Via cookie)/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/4030018928.index
+/S04L01 - Session under JSP overview/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1946643193.index
+/S16L01 - Setting up/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2441704553.index
+/S17L01 - Form implementation for record addition/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3083278966.index
+/S120 Basic MVC/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/665106678.index
+/S01L15 - Include file(s) in JSP page/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2396993733.index
+/S13L02 - Integrate template with project/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3745067472.index
+/S7L1 JSTL Functions & Tags/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/220975476.index
+/S16L03 - Listing data on webpage/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3315051993.index
+/S01L17 - Forward and redirect under JSP/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3596581202.index
+/S16L04 - Making use of include directive/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2867796094.index
+/S17L01 - Form implementation for record addition/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1058986466.index
+/BandTracker/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1090182733.index
+/S16L03 - Listing data on webpage/src
+/Users/nicholaswhite/Documents/GitHub/csc499/Application/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2289506580.index
+/S07L05 - JSTL Split and Join function/src

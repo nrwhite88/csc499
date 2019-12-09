@@ -1,0 +1,17 @@
+package org.bandtracker.session;
+
+import org.bandtracker.hibernate.entity.User;
+
+public class Session {
+
+	User currentUser;
+	
+		public void setCurrentUser(User user) {
+			currentUser = user;
+		}
+		
+		public User getCurrentUser() {
+			return currentUser;
+		}
+	
+}

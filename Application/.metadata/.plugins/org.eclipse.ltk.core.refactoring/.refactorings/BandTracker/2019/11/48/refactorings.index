@@ -1,0 +1,44 @@
+1574635150520	Copy package
+1574635333518	Copy package
+1574635339652	Copy package
+1574635401434	Copy files
+1574638767551	Copy folder
+1574638773176	Copy folder
+1574800331364	Copy file
+1574801938149	Copy compilation unit
+1574831945484	Delete element
+1574880234988	Copy file
+1574881343565	Rename package 'org.bandtracker.entity'
+1574881364475	Rename package 'org.bandtracker.dao'
+1574883316354	Move 'hibernate.cfg.xml' to 'lib'
+1574883341872	Move 'hibernate.cfg.xml' to 'WEB-INF'
+1574883478488	Copy file
+1574883487500	Delete element
+1574884467094	Move file
+1574884541008	Copy file
+1574884548661	Delete element
+1574884589060	Move 'hibernate-core-5.4.9.Final.jar' to 'lib'
+1574884611629	Move 'hibernate-commons-annotations-5.1.0.Final.jar' to 'lib'
+1574884722341	Move 'javax.persistence-api-2.2.jar' to 'lib'
+1574884837981	Move 'jboss-logging-3.3.2.Final.jar' to 'lib'
+1574884844754	Move 'javax.activation-api-1.2.0.jar' to 'lib'
+1574884849712	Move 'jboss-transaction-api_1.2_spec-1.1.1.Final.jar' to 'lib'
+1574884924521	Move 'byte-buddy-1.10.2.jar' to 'lib'
+1574884959670	Move 2 resources to 'lib'
+1574885016212	Move 'istack-commons-runtime-3.0.7.jar' to 'lib'
+1574885053105	Move 'FastInfoset-1.2.15.jar' to 'lib'
+1574885078592	Move 'classmate-1.5.1.jar' to 'lib'
+1574885096294	Move 'dom4j-2.1.1.jar' to 'lib'
+1574885111724	Move 'stax-ex-1.8.jar' to 'lib'
+1574885167162	Move 5 resources to 'lib'
+1574895366514	Copy file
+1574895377107	Delete element
+1574899822923	Copy file
+1575050281547	Copy compilation unit
+1575052956555	Delete element
+1575052968482	Delete element
+1575052972690	Delete element
+1575053253234	Copy compilation unit
+1575057042738	Copy file
+1575057056864	Rename resource 'loginTest.jsp'
+1575089282232	Copy file

@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+    <session-factory>
+ 
+        <!-- Connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/csc499</property>
+        <property name="connection.username">nicktest</property>
+        <property name="connection.password">nicktest</property>
+        <property name="connection.pool_size">50</property>
+           
+        <!-- Show SQL on console -->
+        <property name="show_sql">true</property>
+ 
+		<!--Setting Session context model -->
+		<property name="current_session_context_class">thread</property>
+		
+		
+		<!-- Mapping entities 
+        <mapping class="org.BandTracker.hibernate.entity.Show"/>
+        -->
+        
+        <mapping class="org.BandTracker.hibernate.entity.User"/>
+        <mapping class="org.BandTracker.hibernate.entity.Booking"/>
+        <mapping class="org.BandTracker.hibernate.entity.BandBooking"/>
+        
+        <!-- Mapping resources 
+        <mapping resource="org/bandtracker/hibernate/entity/user.hbm.xml" />
+        -->
+ 
+    </session-factory>
+</hibernate-configuration>

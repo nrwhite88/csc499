@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: nicholaswhite
+Build-Jdk: 12.0.1
+Implementation-Title: BandTracker-Booted
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.eventuror
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/BandTracker-Booted
+Created-By: Maven Integration for Eclipse
+

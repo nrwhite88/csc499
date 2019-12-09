@@ -1,0 +1,8 @@
+package org.bandtracker.controller;
+
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/login")
+public class UpcomingShowsController {
+
+}

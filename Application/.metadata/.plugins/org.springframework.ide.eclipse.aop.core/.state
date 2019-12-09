@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="spring-jpa-hibernate-one-to-many-example-master"/>
+<aop-project name="project-management"/>
+</aop-reference-model>
