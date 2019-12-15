@@ -37,15 +37,9 @@ if(username == null) response.sendRedirect("login.jsp");
 <title>Touring</title>
 </head>
 <body>
-
+<center><h1>Add Bookings to Tours</h1></center>
+<form action="${pageContext.request.contextPath}/operation" method="post">
 <div class="container mtb">
-	<center>
-	<h2>Enter booking details:</h2>
-	<form action="${pageContext.request.contextPath}/operation" method="post">
-		Datetime:<input type="text" name="datetime" required="required"/><br/>
-		Duration: <input type="text" name="duration" required="required"/><br/>
-		<br><br>
-	</center>
 	<div class="col-lg-6">
 		<h2>Your gigs:</h2>
 		<jsp:include page="displayUserBookings.jsp"></jsp:include>
@@ -59,7 +53,7 @@ if(username == null) response.sendRedirect("login.jsp");
 <input type="hidden" name="userId" value=<%= userId %>>
 <input type="hidden" name="userType" value=<%= userType %>>
 <input type="hidden" name="form" value="bookTourOperation">
-<input type="submit" value="Send Request">
+<input type="submit" value="Book to Tour">
 </center>
 
 </form>

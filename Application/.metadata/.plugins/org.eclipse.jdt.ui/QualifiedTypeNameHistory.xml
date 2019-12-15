@@ -34,4 +34,6 @@
     <fullyQualifiedTypeName name="org.bandtracker.hibernate.entity.User"/>
     <fullyQualifiedTypeName name="org.bandtracker.session.Session"/>
     <fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
+    <fullyQualifiedTypeName name="javax.persistence.ManyToMany"/>
+    <fullyQualifiedTypeName name="org.bandtracker.model.TourModel"/>
 </qualifiedTypeNameHistroy>

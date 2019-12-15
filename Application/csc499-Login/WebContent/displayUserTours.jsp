@@ -31,24 +31,23 @@ if(username == null) response.sendRedirect("login.jsp");
 						"<table>" +
 							"<thead>" +
 								"<th>TOUR</th>" +
-								"<th>SHOW</th>" +
-								"<th>LOCATION</th>" +
 								"<th>START</th>" +
-								"<th>LENGTH</th>" +
+								"<th>END</th>" +
 							"</thead>");
 				
-				List<List<Object>> tourBookingsList = (List)request.getAttribute("tourBookings");
-				int booker_id = Integer.parseInt(userId);
-				int booking_id;
-				for(int i=0; i<tourBookingsList.size(); i++) {
-					booking_id = Integer.parseInt(tourBookingsList.get(i).get(0).toString());
+				List<List<Object>> tourList = (List)request.getAttribute("tours");
+				int tour_id;
+				for(int i=0; i<tourList.size(); i++) {
+					tour_id = Integer.parseInt(tourList.get(i).get(0).toString());
 					out.print("<tr class='bordered'>");
-					out.print("<td>" + tourBookingsList.get(i).get(10).toString() + "</td>");
-					out.print("<td>" + tourBookingsList.get(i).get(8).toString() + "</td>");
-					out.print("<td>" + tourBookingsList.get(i).get(12).toString() + ", " +
-							tourBookingsList.get(i).get(13).toString() + "</td>");
-					out.print("<td>" + tourBookingsList.get(i).get(1).toString() + "</td>");
-					out.print("<td>" + tourBookingsList.get(i).get(2).toString() + " hrs</td>");
+					out.print("<td>" + tourList.get(i).get(1).toString() + "</td>");
+					out.print("<td>" + tourList.get(i).get(2).toString() + "</td>");
+					out.print("<td>" + tourList.get(i).get(3).toString() + "</td>");
+					if(request.getParameter("page").equals("myTouring")) {
+						out.print("<td>"
+								+ "<input type='radio' name='tour_id' value='" + tour_id + "'>"
+								+ "</td>");
+					}
 				}
 				
 	out.print(					

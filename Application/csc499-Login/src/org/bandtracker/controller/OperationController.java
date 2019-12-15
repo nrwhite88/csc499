@@ -27,6 +27,7 @@ import org.bandtracker.hibernate.entity.Tour;
 import org.bandtracker.hibernate.entity.User;
 import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.ShowModel;
+import org.bandtracker.model.TourModel;
 import org.bandtracker.model.UserModel;
 
 @WebServlet("/operation")
@@ -78,6 +79,9 @@ public class OperationController extends HttpServlet {
 		case "mybooking":
 			myBookingLoader(request, response);
 			break;
+		case "mytouring":
+			myTouringLoader(request, response);
+			break;
 		default:
 			errorPage(request, response);
 		}
@@ -114,6 +118,9 @@ public class OperationController extends HttpServlet {
 					request.getParameter("datetime").toString());
 			bookOperation(request, response, dataSource, newBooking);
 			request.getRequestDispatcher("home.jsp").forward(request, response);
+			break;
+		case "booktouroperation":
+			bookTourOperation(request, response);
 			break;
 		case "addshowoperation":
 			Show newShow = new Show(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString(),
@@ -333,6 +340,15 @@ public class OperationController extends HttpServlet {
 		request.getRequestDispatcher("myBooking.jsp").forward(request, response);
 	}
 	
+	public void myTouringLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("userId").toString());
+		List<Object> tours = new TourModel().listToursByBandId(dataSource, userId);
+		List<Object> bookings = new BookingModel().listMyBookingsByBandId(dataSource, userId);	
+		request.setAttribute("bookings", bookings);
+		request.setAttribute("tours", tours);
+		request.getRequestDispatcher("myTouring.jsp").forward(request, response);
+	}
+	
 	public void bookingResponseOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bookingId = Integer.parseInt(request.getParameter("booking_id").toString());
 		String userType = request.getParameter("userType").toString();
@@ -449,6 +465,13 @@ public class OperationController extends HttpServlet {
 		int fanId = Integer.parseInt(request.getParameter("userId").toString());
 		int showId = Integer.parseInt(request.getParameter("showId").toString());
 		new ShowModel().attendShow(dataSource, fanId, showId);
+		homeLoader(request, response);
+	}
+	
+	public void bookTourOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int tourId = Integer.parseInt(request.getParameter("tour_id").toString());
+		int bookingId = Integer.parseInt(request.getParameter("booking_id").toString());
+		new TourModel().addBookingToTour(dataSource, tourId, bookingId);
 		homeLoader(request, response);
 	}
 	

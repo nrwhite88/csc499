@@ -38,11 +38,8 @@ public class Tour {
 	inverseJoinColumns=@JoinColumn(name="band_id", referencedColumnName="user_id"))
 	private User mUser;
 	
-	@ManyToMany
-	@JoinTable(name="TourStops",
-	joinColumns= {@JoinColumn(name="tour_id")},
-	inverseJoinColumns= {@JoinColumn(name="show_id")})
-	private List<Show> mShows;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mTour")
+	private List<Booking> bookings;
 	
 	public Tour() {
 		
@@ -103,12 +100,14 @@ public class Tour {
 		this.mUser = mUser;
 	}
 
-	public List<Show> getmShows() {
-		return mShows;
+	public List<Booking> getBookings() {
+		return bookings;
 	}
 
-	public void setmShows(List<Show> mShows) {
-		this.mShows = mShows;
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
+
+	
 	
 }

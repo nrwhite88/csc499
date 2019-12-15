@@ -26,11 +26,11 @@ if(username == null) response.sendRedirect("login.jsp");
 
 <%
 	out.print(
-				"<strong>Tour Bookings:</strong>" +
+				"<strong>Bookings:</strong>" +
 					"<hr/>" +
 						"<table>" +
 							"<thead>" +
-								"<th>TOUR</th>" +
+								"<th>BAR</th>" +
 								"<th>SHOW</th>" +
 								"<th>LOCATION</th>" +
 								"<th>START</th>" +
@@ -38,7 +38,7 @@ if(username == null) response.sendRedirect("login.jsp");
 							"</thead>");
 				
 				List<List<Object>> bookingList = (List)request.getAttribute("bookings");
-				int booker_id = Integer.parseInt(userId);
+				int booker_id = Integer.parseInt(userId.toString());
 				int booking_id;
 				for(int i=0; i<bookingList.size(); i++) {
 					booking_id = Integer.parseInt(bookingList.get(i).get(0).toString());
@@ -49,6 +49,11 @@ if(username == null) response.sendRedirect("login.jsp");
 							bookingList.get(i).get(13).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(1).toString() + "</td>");
 					out.print("<td>" + bookingList.get(i).get(2).toString() + " hrs</td>");
+					if(request.getParameter("page").equals("myTouring")) {
+						out.print("<td>"
+								+ "<input type='radio' name='booking_id' value='" + booking_id + "'>"
+								+ "</td>");
+					}
 				}
 				
 	out.print(					

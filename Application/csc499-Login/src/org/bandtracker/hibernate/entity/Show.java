@@ -38,9 +38,6 @@ public class Show {
 	inverseJoinColumns=@JoinColumn(name="bar_id", referencedColumnName="user_id"))
 	private User mUser;
 	
-	@ManyToMany(mappedBy="mShows")
-	private List<Tour> tours;
-	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="mShow")
 	private List<Booking> bookings;
 	

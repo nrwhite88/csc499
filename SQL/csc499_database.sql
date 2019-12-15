@@ -229,11 +229,11 @@ CREATE TABLE BandTours  (
 CREATE TABLE TourStops  (
 
     tour_ID INT NOT NULL,
-    show_ID INT NOT NULL,
+    booking_ID INT NOT NULL,
     
-    CONSTRAINT tour_stop PRIMARY KEY(tour_ID, show_ID),
+    CONSTRAINT tour_stop PRIMARY KEY(tour_ID, booking_ID),
     FOREIGN KEY(tour_ID) REFERENCES Tours(tour_ID),
-    FOREIGN KEY(show_ID) REFERENCES Shows(show_ID)
+    FOREIGN KEY(booking_ID) REFERENCES Bookings(booking_ID)
 
 );
 CREATE TABLE Attendance (

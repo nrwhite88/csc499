@@ -44,6 +44,12 @@ public class Booking {
 	inverseJoinColumns=@JoinColumn(name="show_id", referencedColumnName="show_id"))
 	private Show mShow;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinTable(name="TourStops",
+	joinColumns=@JoinColumn(name="booking_id", referencedColumnName="booking_id"),
+	inverseJoinColumns=@JoinColumn(name="tour_id", referencedColumnName="tour_id"))
+	private Tour mTour;
+	
 	public Booking() {
 		
 	}
@@ -119,6 +125,14 @@ public class Booking {
 
 	public void setmShow(Show mShow) {
 		this.mShow = mShow;
+	}
+
+	public Tour getmTour() {
+		return mTour;
+	}
+
+	public void setmTour(Tour mTour) {
+		this.mTour = mTour;
 	}
 	
 	
