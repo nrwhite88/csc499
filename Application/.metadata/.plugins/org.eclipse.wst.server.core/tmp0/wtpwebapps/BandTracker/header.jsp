@@ -120,6 +120,9 @@ if(username == null) response.sendRedirect("login.jsp");
           <% if (userId != null && userType.toLowerCase().equals("bar")) { 
         	  %><li><a href="<%= request.getContextPath()%>/operation?page=addShow&bar_id=<%=userId%>">HOST A SHOW</a></li>
           <%}%>
+          <% if (userId != null && userType.toLowerCase().equals("band")) { 
+        	  %><li><a href="<%= request.getContextPath()%>/operation?page=addTour&band_id=<%=userId%>">START A TOUR</a></li>
+          <%}%>
           <li><a href="<%= request.getContextPath()%>/operation?page=upcomingShows">UPCOMING SHOWS</a></li>
           <li><a href="search.jsp">SEARCH</a></li>
           <% if (userId != null) { 

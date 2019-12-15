@@ -80,6 +80,8 @@ CREATE TABLE Tours  (
     tour_ID INT NOT NULL AUTO_INCREMENT,
     start_datetime DATETIME,
     end_datetime DATETIME,
+    tour_name VARCHAR(100),
+    tour_description VARCHAR (500)
     
     PRIMARY KEY(tour_ID)
 );

@@ -143,7 +143,7 @@ List<User> userList = (List)request.getAttribute("userList");
 						int bookee = userList.get(i).getUserId();
 						out.print("<tr class='bordered'>");
 						out.print("<td>" + userList.get(i).getPublicName() + "</td>");
-						if (user_type.equals("FAN")) {
+						if (user_type.toLowerCase().equals("fan")) {
 							out.print("<td>" + userList.get(i).getUserType() + "</td>");
 						}
 						out.print("<td>" + userList.get(i).getTown() + "</td>");
@@ -153,22 +153,13 @@ List<User> userList = (List)request.getAttribute("userList");
 								+ "<input type='hidden' name='page' value='profile'>"
 								+ "<input type='hidden' name='booker' value='" + booker_id + "'>"
 								+ "<input type='hidden' name='bookee' value='" + bookee + "'>" + "</form></td>");
-						if (!user_type.equals("FAN")) {
+						if (! user_type.toLowerCase().equals("fan")) {
 							out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + booker_id
 									+ "&bookee_id=" + userList.get(i).getUserId() + "' method='get'>"
 									+ "<input type='submit' value='BOOK'>" + "<input type='hidden' name='page' value='book'>"
 									+ "<input type='hidden' name='booker' value='" + booker_id + "'>"
 									+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
 									+ "<input type='hidden' name='user_type' value='" + user_type + "'>" + "</form></td>");
-						} else {
-							int fan_id = booker_id;
-							int followee_id = bookee;
-							out.print("<td><form action='" + request.getContextPath() + "/operation?follower_id=" + fan_id
-									+ "&followee_id=" + userList.get(i).getUserId() + "' method='post'>"
-									+ "<input type='submit' value='FOLLOW'>"
-									+ "<input type='hidden' name='page' value='follow'>"
-									+ "<input type='hidden' name='follower' value='" + fan_id + "'>"
-									+ "<input type='hidden' name='followee' value='" + followee_id + "'>" + "</form></td>");
 						}
 					}
 				%>

@@ -26,11 +26,11 @@ if(username == null) response.sendRedirect("login.jsp");
 
 <%
 	out.print(
-				"<strong>Bookings:</strong>" +
+				"<strong>Tour Bookings:</strong>" +
 					"<hr/>" +
 						"<table>" +
 							"<thead>" +
-								"<th>BAR</th>" +
+								"<th>TOUR</th>" +
 								"<th>SHOW</th>" +
 								"<th>LOCATION</th>" +
 								"<th>START</th>" +

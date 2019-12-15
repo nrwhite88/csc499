@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,6 +37,9 @@ public class Show {
 	joinColumns=@JoinColumn(name="show_id", referencedColumnName="show_id"),
 	inverseJoinColumns=@JoinColumn(name="bar_id", referencedColumnName="user_id"))
 	private User mUser;
+	
+	@ManyToMany(mappedBy="mShows")
+	private List<Tour> tours;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="mShow")
 	private List<Booking> bookings;

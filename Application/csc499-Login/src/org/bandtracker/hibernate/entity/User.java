@@ -60,6 +60,9 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="mUser")
 	private List<Show> shows;
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mUser")
+	private List<Tour> tours;
+	
 	public User() {
 
 	}

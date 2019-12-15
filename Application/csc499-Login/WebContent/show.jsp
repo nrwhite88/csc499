@@ -36,14 +36,23 @@ if(username == null) {
 
 <%
 List<List<Object>> bookingList = (List)request.getAttribute("bookings");
+List<List<Object>> attendingList = (List)request.getAttribute("attending");
 Boolean edit = Boolean.parseBoolean(request.getAttribute("edit").toString());
 Show show = (Show)request.getAttribute("show");
 %>
-
-<div class="container">
-	<h1>Show Details</h1>
-	<div class="row">
-		<div class="col-lg-8">
+<center>
+	<h1><% out.print(show.getShowName()); %></h1>
+		<%
+		out.print("</br>");
+		int showId = show.getShowId();
+		out.print("<td><form action='" + request.getContextPath() + "/operation' method='post'>"
+				+ "<input type='submit' value='ATTEND'>"
+				+ "<input type='hidden' name='form' value='attend'>"
+				+ "<input type='hidden' name='userId' value='" + userId + "'>"
+				+ "<input type='hidden' name='userType' value='" + userType + "'>"
+				+ "<input type='hidden' name='showId' value='" + showId + "'>" + "</form></td>");
+		out.print("</br>");
+		%>
 			<h3>Show details:</h3>
 			<hr/>
 			<table>
@@ -54,7 +63,6 @@ Show show = (Show)request.getAttribute("show");
 					<th>Description</th>
 				</thead>
 					<% 
-					int showId = 0;
 					if(! edit) {
 						out.print("<td>" + show.getShowName() + "</td>");
 						out.print("<td>" + show.getStartDatetime() + "</td>");
@@ -85,12 +93,9 @@ Show show = (Show)request.getAttribute("show");
 							}
 					%>
 			</table>
-		</div>
-	</div>
-</div>
+</center>
 <br>
 <div class="container">
-	<div class="row">
 		<div class="col-lg-8">
 			<h3>Associated bookings:</h3>
 			<hr/>
@@ -168,8 +173,8 @@ Show show = (Show)request.getAttribute("show");
 							out.print("<td>" + bookingList.get(i).get(6).toString() + "</td>");
 							out.print("<td>" + bookingList.get(i).get(3).toString() + "</td>");
 							out.print("<form action='" + request.getContextPath() + "/operation' method='post'>"
-									+ "<td><input type='text' name='requestedDatetime' value='" + bookingList.get(i).get(1).toString() + "'></td>"
-									+ "<td><input type='text' name='duration' value='" + bookingList.get(i).get(2).toString() + "'></td>"
+									+ "<td><input type='text' size='20' name='requestedDatetime' value='" + bookingList.get(i).get(1).toString() + "'></td>"
+									+ "<td><input type='text' size='2' name='duration' value='" + bookingList.get(i).get(2).toString() + "'></td>"
 									//+ "<td><input type='radio' name='confirmed' value='true'>Confirm</td>"
 									//+ "<td><input type='radio' name='confirmed' value='false'>Deny</td>"
 									+ "<td>Bar: " + bar_confirmed + "</td>"
@@ -191,8 +196,27 @@ Show show = (Show)request.getAttribute("show");
 						}
 					%>
 			</table>
-		</div>
 	</div>
+		<div class="col-lg-4">
+			<h3>Attending:</h3>
+			<hr/>
+			<table>
+				<thead>
+					<th>Fan</th>
+					<th>Town</th>
+					<th>State</th>
+					</thead>
+					<%
+					for(int i=0; i<bookingList.size(); i++) {
+						out.print("<tr>");
+						out.print("<td>" + attendingList.get(i).get(0).toString() + "</td>");
+						out.print("<td>" + attendingList.get(i).get(1).toString() + "</td>");
+						out.print("<td>" + attendingList.get(i).get(2).toString() + "</td>");
+						out.print("</tr>");	
+						}
+					%>
+			</table>
+</div>
 </div>
 
 <br>

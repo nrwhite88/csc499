@@ -19,17 +19,15 @@ import javax.sql.DataSource;
 
 import org.bandtracker.hibernate.dao.BookingDAO;
 import org.bandtracker.hibernate.dao.ShowDAO;
+import org.bandtracker.hibernate.dao.TourDAO;
 import org.bandtracker.hibernate.dao.UserDAO;
 import org.bandtracker.hibernate.entity.Booking;
 import org.bandtracker.hibernate.entity.Show;
+import org.bandtracker.hibernate.entity.Tour;
 import org.bandtracker.hibernate.entity.User;
 import org.bandtracker.model.BookingModel;
 import org.bandtracker.model.ShowModel;
 import org.bandtracker.model.UserModel;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 @WebServlet("/operation")
 public class OperationController extends HttpServlet {
@@ -55,6 +53,9 @@ public class OperationController extends HttpServlet {
 			break;
 		case "addshow":
 			addShowFormLoader(request, response);
+			break;
+		case "addtour":
+			addTourFormLoader(request, response);
 			break;
 		case "profile":
 			profileLoader(request, response);
@@ -120,6 +121,12 @@ public class OperationController extends HttpServlet {
 			addShowOperation(request, response, dataSource, newShow);
 			homeLoader(request, response);
 			break;
+		case "addtouroperation":
+			Tour newTour = new Tour(request.getParameter("start_datetime").toString(), request.getParameter("end_datetime").toString(),
+					request.getParameter("tour_name"), request.getParameter("tour_description"));
+			addTourOperation(request, response, newTour);
+			homeLoader(request, response);
+			break;
 		case "searchoperation":
 			searchOperation(request, response);
 			break;
@@ -128,7 +135,13 @@ public class OperationController extends HttpServlet {
 			break;
 		case "editbookingoperation":
 			editBookingOperation(request, response);
-		default:
+			break;
+		case "follow":
+			followOperation(request, response);
+			break;
+		case "attend":
+			attendOperation(request, response);
+			break;
 		case "bookingresponseoperation":
 			bookingResponseOperation(request, response);
 			break;
@@ -200,8 +213,13 @@ public class OperationController extends HttpServlet {
 	public void addShowOperation(HttpServletRequest request, HttpServletResponse response, DataSource dataSource,
 			Show newShow) throws ServletException, IOException {
 		new ShowDAO().addShowDetails(newShow, Integer.parseInt(request.getParameter("bar_id").toString()));
-		//new ShowModel().addShow(dataSource, newShow, Integer.parseInt(request.getParameter("bar_id")));
-		
+		homeLoader(request, response);
+	}
+	
+	public void addTourOperation(HttpServletRequest request, HttpServletResponse response,
+			Tour newTour) throws ServletException, IOException {
+		new TourDAO().addTourDetails(newTour, Integer.parseInt(request.getParameter("band_id").toString()));
+		homeLoader(request, response);
 	}
 	
 	public void registerFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -250,6 +268,11 @@ public class OperationController extends HttpServlet {
 		request.getRequestDispatcher("addShow.jsp").forward(request, response);
 	}
 	
+	public void addTourFormLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Add Tour");
+		request.getRequestDispatcher("addTour.jsp").forward(request, response);
+	}
+	
 	public void showLoader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "Show");
 		request.setAttribute("edit", false);
@@ -257,11 +280,13 @@ public class OperationController extends HttpServlet {
 		int show_id = Integer.parseInt(request.getParameter("show_id").toString());
 		
 		List<Object> bookings = new BookingModel().listBookingsWithEverythingByShowId(dataSource, show_id);
+		List<Object> attending = new ShowModel().listFansByShowId(dataSource, show_id);
 
 		request.setAttribute("bookings", bookings);
 		Object show = new ShowDAO().getShowById(show_id);
 		request.setAttribute("show", show);
 		request.setAttribute("bookings", bookings);
+		request.setAttribute("attending", attending);
 		
 		request.getRequestDispatcher("show.jsp").forward(request, response);
 	}
@@ -272,10 +297,12 @@ public class OperationController extends HttpServlet {
 		
 		int show_id = Integer.parseInt(request.getParameter("show_id").toString());
 
+		List<Object> attending = new ShowModel().listFansByShowId(dataSource, show_id);
 		List<Object> bookings = new BookingModel().listBookingsWithEverythingByShowId(dataSource, show_id);
 		Object show = new ShowDAO().getShowById(show_id);
 		request.setAttribute("show", show);
 		request.setAttribute("bookings", bookings);
+		request.setAttribute("attending", attending);
 		
 		request.getRequestDispatcher("show.jsp").forward(request, response);
 
@@ -409,6 +436,20 @@ public class OperationController extends HttpServlet {
 		}
 		
 		request.getRequestDispatcher("testHome.jsp").forward(request, response);
+	}
+	
+	public void followOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int followerId = Integer.parseInt(request.getParameter("follower").toString());
+		int followeeId = Integer.parseInt(request.getParameter("followee").toString());
+		new UserModel().followUser(dataSource, followerId, followeeId);
+		homeLoader(request, response);
+	}
+	
+	public void attendOperation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int fanId = Integer.parseInt(request.getParameter("userId").toString());
+		int showId = Integer.parseInt(request.getParameter("showId").toString());
+		new ShowModel().attendShow(dataSource, fanId, showId);
+		homeLoader(request, response);
 	}
 	
 	public void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

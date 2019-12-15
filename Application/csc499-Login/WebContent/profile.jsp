@@ -40,15 +40,26 @@ if(username == null) response.sendRedirect("login.jsp");
 	<h3><center>A <%= user.getUserType() %> from <%= user.getTown() %></center></h3><br/></br>
 	<center>
 	<%
-		if (!userType.equals("FAN")) {
-			int booker = Integer.parseInt(request.getParameter("booker").toString());
-			int bookee = Integer.parseInt(request.getParameter("bookee").toString());
-			out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + request.getParameter("booker")
-					+ "&bookee_id=" + request.getParameter("bookee") + "' method='get'>"
-					+ "<input type='submit' value='BOOK'>" + "<input type='hidden' name='page' value='book'>"
-					+ "<input type='hidden' name='booker' value='" + booker + "'>"
-					+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
-					+ "<input type='hidden' name='user_type' value='" + userType + "'>" + "</form></td>");
+	int follower_id = Integer.parseInt(request.getParameter("booker").toString());
+	int followee_id = Integer.parseInt(request.getParameter("bookee").toString());
+	out.print("<td><form action='" + request.getContextPath() + "/operation' method='post'>"
+			+ "<input type='submit' value='FOLLOW'>"
+			+ "<input type='hidden' name='form' value='follow'>"
+			+ "<input type='hidden' name='userId' value='" + userId + "'>"
+			+ "<input type='hidden' name='userType' value='" + userType + "'>"
+			+ "<input type='hidden' name='follower' value='" + follower_id + "'>"
+			+ "<input type='hidden' name='followee' value='" + followee_id + "'>" + "</form></td>");
+	if (!userType.equals("FAN")) {
+		out.println("</br>");
+		int booker = follower_id;
+		int bookee = followee_id;
+		out.print("<td><form action='" + request.getContextPath() + "/operation?booker_id=" + request.getParameter("booker")
+				+ "&bookee_id=" + request.getParameter("bookee") + "' method='get'>"
+				+ "<input type='submit' value='BOOK'>"
+				+ "<input type='hidden' name='page' value='book'>"
+				+ "<input type='hidden' name='booker' value='" + booker + "'>"
+				+ "<input type='hidden' name='bookee' value='" + bookee + "'>"
+				+ "<input type='hidden' name='user_type' value='" + userType + "'>" + "</form></td>");
 		}
 	%>
 	</center>

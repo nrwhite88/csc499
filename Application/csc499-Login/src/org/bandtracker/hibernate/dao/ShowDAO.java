@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bandtracker.hibernate.entity.Booking;
 import org.bandtracker.hibernate.entity.Show;
+import org.bandtracker.hibernate.entity.Tour;
 import org.bandtracker.hibernate.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,7 +27,8 @@ public class ShowDAO {
             Configuration configuration = new Configuration().configure()
             		.addAnnotatedClass(User.class)
             		.addAnnotatedClass(Show.class)
-            		.addAnnotatedClass(Booking.class);
+            		.addAnnotatedClass(Booking.class)
+            		.addAnnotatedClass(Tour.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

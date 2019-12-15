@@ -200,4 +200,61 @@ public class ShowModel {
 		return listShows;
 	}
 	
+	public Boolean attendShow(DataSource dataSource, int fanId, int showId) {
+		Connection connect = null;
+		PreparedStatement stmt = null;
+
+		try {
+			connect = dataSource.getConnection();
+			
+			String query = "insert into Attendance values(?,?)";
+			stmt = connect.prepareStatement(query);
+			stmt.setInt(1, fanId);
+			stmt.setInt(2, showId);
+			System.out.println(query);
+			
+			return stmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//FIXME add handler for case where username is taken
+			return false;
+		}
+	}
+	
+	public List<Object> listFansByShowId(DataSource dataSource, int showId) {
+		List<Object> listUsers = new ArrayList<>();
+		Connection connect = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			connect = dataSource.getConnection();
+			String query = "SELECT u.public_name, u.town, u.state from Shows s\n" + 
+					"JOIN Attendance a on a.show_ID=s.show_ID\n" + 
+					"JOIN Users u on u.user_ID=a.fan_ID\n" + 
+					"WHERE s.show_ID=?;";
+			stmt = connect.prepareStatement(query);
+			stmt.setInt(1, showId);
+			System.out.println(stmt);
+
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				List<Object> user = Arrays.asList(rs.getString("public_name"),
+						rs.getString("town"),
+						rs.getString("state")
+						);
+				listUsers.add(user);
+			}
+			System.out.println(listUsers);
+			return listUsers;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listUsers;
+	}
 }
