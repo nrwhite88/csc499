@@ -207,6 +207,7 @@ Show show = (Show)request.getAttribute("show");
 					<th>State</th>
 					</thead>
 					<%
+					if (attendingList.size()>0) {
 					for(int i=0; i<bookingList.size(); i++) {
 						out.print("<tr>");
 						out.print("<td>" + attendingList.get(i).get(0).toString() + "</td>");
@@ -214,6 +215,7 @@ Show show = (Show)request.getAttribute("show");
 						out.print("<td>" + attendingList.get(i).get(2).toString() + "</td>");
 						out.print("</tr>");	
 						}
+					}
 					%>
 			</table>
 </div>
